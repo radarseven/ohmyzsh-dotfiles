@@ -22,23 +22,21 @@ install postgresql
 install caskroom/cask/brew-cask
 
 cask install alfred
-cask install caffeine
+cask install clean-my-mac
+cask install cloudapp
+cask install dropbox
+cask install firefox
 cask install flux
-
+cask install google-chrome
+cask install harvest
+cask install iterm2
+cask install rdio
+cask install transmit
+cask install sequel-pro
+cask install slack
+cask install sublime-text
+cask install the-unarchiver
 cask install virtualbox
 cask install vagrant
-
-cask install google-chrome
-cask install iterm2
-cask install phpstorm
-cask install sequel-pro
-
-cask install adium
-cask install nvalt
-cask install rdio
-cask install slack
-cask install textexpander
-cask install vlc
-cask install the-unarchiver
 
 cleanup
