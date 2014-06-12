@@ -1,4 +1,4 @@
-# Matt’s dotfiles (from Mathias and Paul Irish) adapted for ZSH
+# Brandon’s dotfiles (from Mathias and Paul Irish) adapted for ZSH by Matt Stauffer
 
 ## Installation
 
@@ -7,7 +7,7 @@
 You can clone the repository wherever you want. (I like to keep it in `~/Projects/dotfiles`, with `~/dotfiles` as a symlink.) The bootstrapper script will pull in the latest version and copy the files to your home folder.
 
 ```bash
-git clone https://github.com/mattstauffer/ohmyzsh-dotfiles.git
+git clone https://github.com/httpster/ohmyzsh-dotfiles.git
 ```
 
 The bootstrap.sh file currently doesn't work, so just copy any of the dotfiles you like into your home directory.
@@ -17,7 +17,7 @@ The bootstrap.sh file currently doesn't work, so just copy any of the dotfiles y
 To install these dotfiles without Git:
 
 ```bash
-cd; curl -#L https://github.com/mattstauffer/ohmyzsh-dotfiles/tarball/master | tar -xzv --strip-components 1 --exclude={README.md,bootstrap.sh}
+cd; curl -#L https://github.com/httpster/ohmyzsh-dotfiles/tarball/master | tar -xzv --strip-components 1 --exclude={README.md,bootstrap.sh}
 ```
 
 To update later on, just run that command again.

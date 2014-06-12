@@ -22,12 +22,10 @@ install postgresql
 install caskroom/cask/brew-cask
 
 cask install alfred
-cask install clean-my-mac
-cask install cloudapp
+cask install cleanmymac
 cask install dropbox
 cask install firefox
 cask install flux
-cask install google-chrome
 cask install harvest
 cask install iterm2
 cask install rdio

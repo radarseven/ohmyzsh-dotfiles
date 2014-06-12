@@ -107,69 +107,6 @@ set wildignore+=*/node_modules/**
 " Create/edit file in the current directory
 nmap :ed :edit %:p:h/
 
-"" PHP
-" Easily create class. @todo: Make this actually work!
-function! Class()
-	let name = input('Class Name? ')
-	let namespace = input('Any Namespace? ')
-
-	if strlen(namespace)
-		exec 'normal i<?php namespace ' . namespace . ';
-
-'
-	else
-		exec 'normal i<?php
-
-'
-	endif
-
-	" Open class
-	exec 'normal iclass ' . name . ' {
-}O'
-
-	exec 'normal i
-	public function __construct()
-	{
-
-	}
-kkA'
-endfunction
-nmap <leader>1 :call Class()<cr>
-
-" Add a new dependency to a PHP class
-function! AddDependency()
-	let dependency = input('Var Name: ')
-	let namespace = input('Class Path: ')
-
-	let segments = split(namespace, '\')
-	let typehint = segments[-1]
-
-	exec 'normal gg/construct
-%i, ' . typehint . ' $' . dependency . '/}
-O$this->a' . dependency . ' = $' . dependency . ';==o?{
-kO	protected $' . dependency . ';
-?{
-Ouse ' . namespace . ';
-'
-	
-	" Remove opening comma if there is only one dependency
-	exec 'normal :%s/(, /(/g
-'
-endfunction
-nmap <leader>2 :call AddDependency()<cr>
-
-" Strip trailing whitespace (,ss)
-function! StripWhitespace()
-	let save_cursor = getpos(".")
-	let old_query = getreg('/')
-	:%s/\s\+$//e
-	call setpos('.', save_cursor)
-	call setreg('/', old_query)
-endfunction
-noremap <leader>ss :call StripWhitespace()<CR>
-" Save a file as root (,W)
-noremap <leader>W :w !sudo tee % > /dev/null<CR>
-
 " Automatic commands
 if has("autocmd")
 	" Enable file type detection
@@ -184,27 +121,27 @@ colorscheme solarized
 
 " Uncomment all of the following lines to use Vundle with some default bundles
 " " Vundle
-" filetype off
+set nocompatible
+filetype off
 
-" set rtp+=~/.vim/bundle/vundle/
-" call vundle#rc()
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
 
-" Bundle 'gmarik/vundle'
+Plugin 'gmarik/Vundle.vim'
 " 
 " " My bundles
-" Bundle 'kien/ctrlp.vim'
+" " Bundle 'kien/ctrlp.vim'
 " " " -- or --
-" " Bundle 'twe4ked/vim-peepopen'
+Plugin 'twe4ked/vim-peepopen'
 " " 
-" Bundle 'Lokaltog/vim-easymotion'
-" Bundle 'bling/vim-airline'
-" Bundle 'altercation/vim-colors-solarized'
-" Bundle 'scrooloose/nerdtree'
-" 
-" " Ctrl-P key mapping
-" let g:ctrlp_map = '<c-p>'
-" 
-" filetype plugin indent on
+Plugin 'Lokaltog/vim-easymotion'
+Plugin 'bling/vim-airline'
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'scrooloose/nerdtree'
+
+call vundle#end()
+filetype plugin indent on
 
 " " enable powerline symbols for airline
-" let g:airline_powerline_fonts=1
+let g:airline_powerline_fonts=1
+let g:airline_theme='powerlineish'
