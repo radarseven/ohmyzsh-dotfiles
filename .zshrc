@@ -1,13 +1,15 @@
 # Add `~/bin` to the `$PATH`
 export PATH="$HOME/bin:$PATH"
 
+# Tell Homebrew Cask to install files to /etc/Caskroom and symlink to root Applications directory
+export HOMEBREW_CASK_OPTS="--appdir=/Applications --caskroom=/etc/Caskroom"
+
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
 
 # Set name of the OhMyZSH theme to load.
 # Look in ~/.oh-my-zsh/themes/
 ZSH_THEME="dstufft"
-
 
 # Load the shell dotfiles, and then some:
 # * ~/.mix-path can be used to extend `$PATH`.
