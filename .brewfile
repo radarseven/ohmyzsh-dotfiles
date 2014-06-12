@@ -24,10 +24,11 @@ install caskroom/cask/brew-cask
 cask install alfred
 cask install cleanmymac
 cask install dropbox
-cask install firefox
 cask install flux
 cask install harvest
 cask install iterm2
+cask install mamp
+cask install onepassword
 cask install rdio
 cask install transmit
 cask install sequel-pro
