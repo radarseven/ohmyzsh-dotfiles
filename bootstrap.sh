@@ -1,18 +1,16 @@
 #!/usr/bin/env bash
-echo "Sorry, this currently does not work for ZSH. Gotta do it yourself for right now."
-exit 0
 
 cd "$(dirname "${BASH_SOURCE}")"
-git pull origin master
 function doIt() {
 	rsync --exclude ".git/" --exclude ".DS_Store" --exclude "bootstrap.sh" \
 		--exclude "README.md" --exclude "LICENSE-GPL.txt" \
 		--exclude "LICENSE-MIT.txt" -av --no-perms . ~
 }
-if [ "$1" == "--force" -o "$1" == "-f" ]; then
+
+if [[ "$1" == "--force" || "$1" == "-f" ]]; then
 	doIt
 else
-	read -p "This may overwrite existing files in your home directory. Are you sure? (y/n) " -n 1
+	read -q "REPLY?This may overwrite existing files in your home directory. Are you sure? (y/n) "
 	echo
 	if [[ $REPLY =~ ^[Yy]$ ]]; then
 		doIt
