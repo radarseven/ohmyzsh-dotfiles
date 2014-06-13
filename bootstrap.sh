@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 cd "$(dirname "${BASH_SOURCE}")"
+
 function doIt() {
 	rsync --exclude ".git/" --exclude ".DS_Store" --exclude "bootstrap.sh" \
 		--exclude "README.md" --exclude "LICENSE-GPL.txt" \
@@ -16,5 +17,7 @@ else
 		doIt
 	fi
 fi
+
 unset doIt
-source ~/.bash_profile
+
+source ~/.zshrc
