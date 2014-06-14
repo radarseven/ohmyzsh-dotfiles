@@ -52,6 +52,7 @@ COMPLETION_WAITING_DOTS="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # plugins=(git brew bundler capistrano cloudapp composer gem laravel npm rvm bower sublime)
-plugins=(git zsh-syntax-highlighting vi-mode)
+# removed vi-mode, making console slooooow.
+plugins=(git zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
