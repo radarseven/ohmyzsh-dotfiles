@@ -22,7 +22,10 @@ install postgresql
 install caskroom/cask/brew-cask
 
 cask install alfred
+cask install appzapper
+cask install bartender
 cask install cleanmymac
+cask install cloud
 cask install dropbox
 cask install flux
 cask install harvest
@@ -33,6 +36,7 @@ cask install rdio
 cask install transmit
 cask install sequel-pro
 cask install slack
+cask install sonos
 cask install sublime-text
 cask install the-unarchiver
 cask install virtualbox
