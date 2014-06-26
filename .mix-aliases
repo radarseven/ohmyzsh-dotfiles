@@ -204,3 +204,7 @@ alias getip="curl -s http://checkip.dyndns.org | sed 's/[a-zA-Z/<> :]//g'"
 cdf() {  # short for cdfinder
   cd "`osascript -e 'tell app "Finder" to POSIX path of (insertion location as alias)'`"
 }
+
+# Make it Craft!
+# https://github.com/mattstauffer/makeItCraft
+alias makeItCraft="bash <(curl -s https://raw.githubusercontent.com/mattstauffer/makeItCraft/master/makeItCraft.sh)"
