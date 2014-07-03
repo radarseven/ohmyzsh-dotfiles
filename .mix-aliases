@@ -204,3 +204,6 @@ alias getip="curl -s http://checkip.dyndns.org | sed 's/[a-zA-Z/<> :]//g'"
 cdf() {  # short for cdfinder
   cd "`osascript -e 'tell app "Finder" to POSIX path of (insertion location as alias)'`"
 }
+
+# --- Dandelion -------------------------------------
+alias deployProd="dandelion --config=dandelion.prod.yml deploy"
