@@ -207,3 +207,7 @@ cdf() {  # short for cdfinder
 
 # --- Dandelion -------------------------------------
 alias deployProd="dandelion --config=dandelion.prod.yml deploy"
+
+# Make it Craft!
+# https://github.com/mattstauffer/makeItCraft
+alias makeItCraft="bash <(curl -s https://raw.githubusercontent.com/mattstauffer/makeItCraft/master/makeItCraft.sh)"
