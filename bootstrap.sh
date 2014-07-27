@@ -10,8 +10,8 @@ function doIt() {
 if [[ "$1" == "--force" || "$1" == "-f" ]]; then
 	doIt
 else
-	read -q "REPLY?This may overwrite existing files in your home directory. Are you sure? (y/n) "
-	echo
+	echo -n  "This may overwrite existing files in your home directory. Are you sure? (y/n) "
+	read REPLY
 	if [[ $REPLY =~ ^[Yy]$ ]]; then
 		doIt
 	fi
