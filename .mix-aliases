@@ -83,3 +83,7 @@ alias plistbuddy="/usr/libexec/PlistBuddy"
 # Ring the terminal bell, and put a badge on Terminal.app’s Dock icon
 # (useful when executing time-consuming commands)
 alias badge="tput bel"
+
+# MakeItCraft
+# https://github.com/mattstauffer/makeItCraft
+alias makeItCraft="bash <(curl -s https://raw.githubusercontent.com/mattstauffer/makeItCraft/master/makeItCraft.sh)"
