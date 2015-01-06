@@ -1,0 +1,15 @@
+coreutils
+wget --enable-iri
+homebrew/dupes/grep
+ack
+git
+tree
+openssl
+php54-mcrypt
+josegonzalez/php/composer
+optipng
+redis
+mysql
+phpunit
+postgresql
+caskroom/cask/brew-cask
