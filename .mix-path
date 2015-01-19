@@ -9,3 +9,6 @@ export PATH=$PATH:/Applications/MAMP/Library/bin #MAMP
 # export PATH="/usr/local/heroku/bin:$PATH" # Heroku Toolbelt
 # Laravel Composer
 export PATH=$PATH:$HOME/.composer/vendor/bin
+# export PATH=$PATH:/Applications/MAMP/bin/php5.3/bin
+# [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+# export PATH="/usr/local/heroku/bin:$PATH" # Heroku Toolbelt
