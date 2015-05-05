@@ -1,4 +1,4 @@
-# Brandon’s dotfiles (from Mathias and Paul Irish) adapted for ZSH by Matt Stauffer
+# Michael's Dotfiles: *Adapted from Mathias and Paul Irish for ZSH by Matt Stauffer.*
 
 ## Installation
 
@@ -7,10 +7,16 @@
 You can clone the repository wherever you want. (I like to keep it in `~/Projects/dotfiles`, with `~/dotfiles` as a symlink.) The bootstrapper script will pull in the latest version and copy the files to your home folder.
 
 ```bash
-git clone https://github.com/httpster/ohmyzsh-dotfiles.git
+git clone https://github.com/radarseven/ohmyzsh-dotfiles.git
 ```
 
-The bootstrap.sh file currently doesn't work, so just copy any of the dotfiles you like into your home directory.
+#### Bootstrap
+
+~~The bootstrap.sh file currently doesn't work, so just copy any of the dotfiles you like into your home directory.~~
+
+**Bootstrap now works!** Run `bash bootstrap.sh` to copy files into the `~` directory.
+
+This should be run anytime changes are made in this repo.
 
 ### Git-free install
 
@@ -36,13 +42,13 @@ export PATH="$HOME/utils:$PATH"
 
 If `~/.mix-extra` exists, it will be sourced along with the other files. You can use this to add a few custom commands without the need to fork this entire repository, or to add commands you don’t want to commit to a public repository.
 
-### Install Homebrew formulae
+### **UPDATED**: Install Homebrew formulae
 
-When setting up a new Mac, you may want to install some common [Homebrew](http://brew.sh/) formulae (after installing Homebrew, of course):
+#### `brew bundle` no longer supported
 
-```bash
-brew bundle .brewfile
-```
+See `/setup/osx-setup-part1-.md` for a new approach on how to install apps using Homebrew.
+
+~~When setting up a new Mac, you may want to install some common [Homebrew](http://brew.sh/) formulae (after installing Homebrew, of course):~~
 
 ## Original (Bash dotfiles) Author
 
