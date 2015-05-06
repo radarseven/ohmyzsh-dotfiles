@@ -23,7 +23,7 @@ This should be run anytime changes are made in this repo.
 To install these dotfiles without Git:
 
 ```bash
-cd; curl -#L https://github.com/httpster/ohmyzsh-dotfiles/tarball/master | tar -xzv --strip-components 1 --exclude={README.md,bootstrap.sh}
+cd; curl -#L https://github.com/radarseven/ohmyzsh-dotfiles/tarball/master | tar -xzv --strip-components 1 --exclude={README.md,bootstrap.sh}
 ```
 
 To update later on, just run that command again.
