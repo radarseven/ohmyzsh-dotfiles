@@ -1,6 +1,7 @@
 # --- EXPORTS (& other stuff copied from dotfiles) ----------
 # Make vim the default editor
-export EDITOR="vim"
+# export EDITOR="vim"
+export EDITOR='subl -w'
 
 # Prefer US English and UTF-8
 export LANG="en_US"
