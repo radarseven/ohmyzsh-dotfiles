@@ -20,8 +20,8 @@ alias vkill="vagrant destroy"
 # Check out .gitconfig for great Git aliases
 
 # Other fun custom config
-bindkey "[D" backward-word
-bindkey "[C" forward-word
+# bindkey "[D" backward-word
+# bindkey "[C" forward-word
 
 
 # ---- FANCY DOTFILES-IMPORTED ALIASES ----------------
@@ -171,7 +171,7 @@ alias tm="top -o vsize" # memory
 
 # SSH Tunnels
 function sshtun() {
-	ssh -N $1 -L $2:127.0.0.1:$3 
+	ssh -N $1 -L $2:127.0.0.1:$3
 }
 
 # Common
