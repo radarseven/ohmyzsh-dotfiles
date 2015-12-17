@@ -1,5 +1,5 @@
 # Add `~/bin` to the `$PATH`
-export PATH="$HOME/bin:$PATH"
+export PATH="/Applications/MAMP/Library/bin:/Applications/MAMP/bin/php/php5.6.7/bin:$HOME/bin:$PATH"
 
 # Tell Homebrew Cask to install files to /etc/Caskroom and symlink to root Applications directory
 export HOMEBREW_CASK_OPTS="--appdir=/Applications --caskroom=/etc/Caskroom"
