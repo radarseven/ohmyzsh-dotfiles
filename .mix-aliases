@@ -190,13 +190,7 @@ alias sites="cd ~/Sites"
 # Self-check
 alias reload="source ~/.dotfiles/bash/bash_aliases" # reload aliases
 alias ea="mate -w ~/.dotfiles/bash/bash_aliases && reload" # edit aliases in Textmate and reload
-#alias ee="mate -w ~/bin/dotfiles/bash/evn" #edit env
-
-# Create a dir and switch into it
-function take {
-	mkdir	 $1
-	cd $1
-}
+#alias ee="mate -w ~/bin/dotfiles/bash/evn" #ediy
 
 # Get public facing IP
 alias getip="curl -s http://checkip.dyndns.org | sed 's/[a-zA-Z/<> :]//g'"
