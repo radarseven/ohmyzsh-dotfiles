@@ -18,3 +18,7 @@ Thumbs.db
 
 # Sublime Text project files
 *.sublime*
+
+# Composer
+vendor
+vendor/bundle

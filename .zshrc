@@ -1,5 +1,8 @@
 # Add `~/bin` to the `$PATH`
-export PATH="/Applications/MAMP/bin/php/php7.0.0/bin:$HOME/bin:$PATH"
+export PATH="/Applications/Postgres.app/Contents/Versions/latest/bin:/Applications/MAMP/bin/php/php7.0.0/bin:$HOME/bin:$PATH"
+
+# Brew OpenSSL
+export PATH="/usr/local/opt/openssl/bin:$PATH"
 
 # Tell Homebrew Cask to install files to /etc/Caskroom and symlink to root Applications directory
 export HOMEBREW_CASK_OPTS="--appdir=/Applications --caskroom=/etc/Caskroom"

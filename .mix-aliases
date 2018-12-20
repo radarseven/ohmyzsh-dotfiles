@@ -17,6 +17,9 @@ alias vsus="vagrant suspend"
 alias vhalt="vagrant halt"
 alias vkill="vagrant destroy"
 
+# Homestead
+alias hsconf="subl ~/Homestead/Homestead.yaml"
+
 # Check out .gitconfig for great Git aliases
 
 # Other fun custom config
@@ -206,3 +209,17 @@ alias deployProd="dandelion --config=dandelion.prod.yml deploy"
 # Make it Craft!
 # https://github.com/mattstauffer/makeItCraft
 alias makeItCraft="bash <(curl -s https://raw.githubusercontent.com/mattstauffer/makeItCraft/master/makeItCraft.sh)"
+
+# Homestead wrapper for Vagrant
+function homestead() {
+    ( cd ~/Homestead && vagrant $* )
+}
+
+# Clean out merged local branches
+# @url: https://stackoverflow.com/questions/6127328/how-can-i-delete-all-git-branches-which-have-been-merged
+alias git:clean="git branch --merged | egrep -v \"(^\*|master|dev)\" | xargs git branch -d"
+
+# START: vMox
+alias vmox="cd ~/Sites/vMox && ll"
+alias vmox:sql="bundle exec rake imports:sql"
+# END: vMox
