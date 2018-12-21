@@ -1,6 +1,6 @@
 [user]
-	# name = Michael Reiner
-	# email = mreiner77@gmail.com
+	name = Michael Reiner
+	email = mreiner77@gmail.com
 
 [alias]
 	# View abbreviated SHA, description, and history graph of the latest 20 commits
@@ -27,6 +27,14 @@
 	credit = "!f() { git commit --amend --author \"$1 <$2>\" -C HEAD; }; f"
 	# Interactive rebase with the given number of latest commits
 	reb = "!r() { git rebase -i HEAD~$1; }; r"
+	# vMox/Advantage
+	co = checkout
+	updateall = remote update
+	masterprep = rebase -i origin/master
+	masterpush = push origin HEAD:refs/for/master
+	comaster = !git co master && git pull
+	newmaster = !git checkout && git pull && git checkout -b
+	# /END vMox/Advantage
 [apply]
 	# Detect whitespace errors when applying a patch
 	whitespace = fix
