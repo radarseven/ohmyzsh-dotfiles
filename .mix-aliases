@@ -190,11 +190,6 @@ alias ts="date +%s | pbcopy"
 # Sites
 alias sites="cd ~/Sites"
 
-# Self-check
-alias reload="source ~/.dotfiles/bash/bash_aliases" # reload aliases
-alias ea="mate -w ~/.dotfiles/bash/bash_aliases && reload" # edit aliases in Textmate and reload
-#alias ee="mate -w ~/bin/dotfiles/bash/evn" #ediy
-
 # Get public facing IP
 alias getip="curl -s http://checkip.dyndns.org | sed 's/[a-zA-Z/<> :]//g'"
 
@@ -202,6 +197,12 @@ alias getip="curl -s http://checkip.dyndns.org | sed 's/[a-zA-Z/<> :]//g'"
 cdf() {  # short for cdfinder
   cd "`osascript -e 'tell app "Finder" to POSIX path of (insertion location as alias)'`"
 }
+
+# Reload the shell (i.e. invoke as a login shell)
+alias reload="exec ${SHELL} -l"
+
+# Print each PATH entry on a separate line
+alias path='echo -e ${PATH//:/\\n}'
 
 # --- Dandelion -------------------------------------
 alias deployProd="dandelion --config=dandelion.prod.yml deploy"
@@ -222,4 +223,5 @@ alias git:clean="git branch --merged | egrep -v \"(^\*|master|dev)\" | xargs git
 # START: vMox
 alias vmox="cd ~/Sites/vMox && ll"
 alias vmox:sql="bundle exec rake imports:sql"
+alias kiwi:compile="RAILS_ENV=production bundle exec rake assets:clobber assets:precompile assets:clean"
 # END: vMox
