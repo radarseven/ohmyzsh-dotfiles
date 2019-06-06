@@ -221,7 +221,12 @@ function homestead() {
 alias git:clean="git branch --merged | egrep -v \"(^\*|master|dev)\" | xargs git branch -d"
 
 # START: vMox
-alias vmox="cd ~/Sites/vMox && ll"
+alias acg="cd ~/Sites/vMox/acg && ll"
+alias acg:cc="cd ~/Sites/vMox/acg/command_center"
+alias acg:ob="cd ~/Sites/vMox/acg/application"
+alias vmox="cd ~/Sites/vMox/vmox && ll"
 alias vmox:sql="bundle exec rake imports:sql"
 alias kiwi:compile="RAILS_ENV=production bundle exec rake assets:clobber assets:precompile assets:clean"
+alias vmox:cop="cd ~/Sites/vMox/vmox/one_portal"
+alias vmox:wem="cd ~/Sites/vMox/vmox/application"
 # END: vMox
