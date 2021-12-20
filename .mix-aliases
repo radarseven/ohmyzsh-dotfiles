@@ -230,3 +230,10 @@ alias kiwi:compile="RAILS_ENV=production bundle exec rake assets:clobber assets:
 alias vmox:cop="cd ~/Sites/vMox/vmox/one_portal"
 alias vmox:wem="cd ~/Sites/vMox/vmox/application"
 # END: vMox
+
+# Get the bundle ID of an app
+# Can be used as the `website` value in 1Password for macOS apps to enable autofill
+# https://superuser.com/q/346369
+function bundleId() {
+  osascript -e "id of app \"$1\""
+}
