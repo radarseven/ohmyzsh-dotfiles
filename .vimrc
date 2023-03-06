@@ -128,14 +128,14 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 Plugin 'gmarik/Vundle.vim'
-" 
+"
 " " My bundles
 " " Bundle 'kien/ctrlp.vim'
 " " " -- or --
 Plugin 'twe4ked/vim-peepopen'
-" " 
+" "
 Plugin 'Lokaltog/vim-easymotion'
-Plugin 'bling/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'scrooloose/nerdtree'
 

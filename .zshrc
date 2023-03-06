@@ -1,11 +1,29 @@
+# Fig pre block. Keep at the top of this file.
+[[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.pre.zsh"
+# Colorise the top Tabs of Iterm2 with the same color as background
+# Just change the 18/26/33 wich are the rgb values
+echo -e "\033]6;1;bg;red;brightness;18\a"
+echo -e "\033]6;1;bg;green;brightness;26\a"
+echo -e "\033]6;1;bg;blue;brightness;33\a"
+
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # Add `~/bin` to the `$PATH`
-export PATH="/Applications/Postgres.app/Contents/Versions/latest/bin:/Applications/MAMP/bin/php/php7.0.0/bin:$HOME/bin:$PATH"
+# export PATH="/Applications/Postgres.app/Contents/Versions/latest/bin:/Applications/MAMP/bin/php/php7.0.0/bin:$HOME/bin:$PATH"
 
 # Brew OpenSSL
 export PATH="/usr/local/opt/openssl/bin:$PATH"
 
 # Tell Homebrew Cask to install files to /etc/Caskroom and symlink to root Applications directory
 export HOMEBREW_CASK_OPTS="--appdir=/Applications --caskroom=/etc/Caskroom"
+
+# Dot(bleh)net
+export dotnet="/usr/local/share/dotnet/dotnet"
 
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
@@ -14,8 +32,8 @@ ZSH=$HOME/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # ZSH_THEME="dstufft"
 # ZSH_THEME="cobalt2"
-# ZSH_THEME="powerlevel9k/powerlevel9k"
-ZSH_THEME="shades-of-purple"
+# ZSH_THEME="shades-of-purple"
+ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # Load the shell dotfiles, and then some:
 # * ~/.mix-path can be used to extend `$PATH`.
@@ -84,17 +102,54 @@ COMPLETION_WAITING_DOTS="true"
 # plugins=(git brew bundler capistrano cloudapp composer gem laravel npm rvm bower sublime)
 # plugins=(git zsh-syntax-highlighting vi-mode)
 plugins=(
+  asdf
+  docker
   git
-  zsh-autosuggestions
-  yarn
-  web-search
   jsontools
+  macos
   macports
   node
-  macos
   sudo
   thor
-  docker
+  web-search
+  yarn
+  zsh-autosuggestions
+  # zsh-nvm
 )
 
 source $ZSH/oh-my-zsh.sh
+
+# place this after nvm initialization!
+# autoload -U add-zsh-hook
+# load-nvmrc() {
+#   local node_version="$(nvm version)"
+#   local nvmrc_path="$(nvm_find_nvmrc)"
+
+#   if [ -n "$nvmrc_path" ]; then
+#     local nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
+
+#     if [ "$nvmrc_node_version" = "N/A" ]; then
+#       nvm install
+#     elif [ "$nvmrc_node_version" != "$node_version" ]; then
+#       nvm use
+#     fi
+#   elif [ "$node_version" != "$(nvm version default)" ]; then
+#     echo "Reverting to nvm default version"
+#     nvm use default
+#   fi
+# }
+# add-zsh-hook chpwd load-nvmrc
+# load-nvmrc
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+export VOLTA_HOME="$HOME/.volta"
+export PATH="$VOLTA_HOME/bin:$PATH"
+
+# export NVM_DIR="$HOME/.nvm"
+# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# Fig post block. Keep at the bottom of this file.
+[[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
