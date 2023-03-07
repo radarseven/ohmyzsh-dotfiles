@@ -1,10 +1,5 @@
 # Fig pre block. Keep at the top of this file.
 [[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.pre.zsh"
-# Colorise the top Tabs of Iterm2 with the same color as background
-# Just change the 18/26/33 wich are the rgb values
-echo -e "\033]6;1;bg;red;brightness;18\a"
-echo -e "\033]6;1;bg;green;brightness;26\a"
-echo -e "\033]6;1;bg;blue;brightness;33\a"
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
@@ -60,12 +55,15 @@ POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="%{%B%F{black}%K{yellow}%} $user_symbo
 POWERLEVEL9K_VCS_MODIFIED_BACKGROUND='red'
 # Add a new line after the global prompt
 POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
+
+# ↓ May cause issues with PL10K Instant Prompt
+# @see https://github.com/romkatv/powerlevel10k/blob/master/README.md#how-do-i-configure-instant-prompt
+# ----
 # Colorise the top Tabs of Iterm2 with the same color as background
 # Just change the 18/26/33 wich are the rgb values
-echo -e "\033]6;1;bg;red;brightness;18\a"
-echo -e "\033]6;1;bg;green;brightness;26\a"
-echo -e "\033]6;1;bg;blue;brightness;33\a"
-
+# echo -e "\033]6;1;bg;red;brightness;18\a"
+# echo -e "\033]6;1;bg;green;brightness;26\a"
+# echo -e "\033]6;1;bg;blue;brightness;33\a"
 
 # --- ZSH CONFIG -----------------------
 # Set to this to use case-sensitive completion
