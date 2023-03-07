@@ -147,7 +147,7 @@ alias c="pygmentize -O style=solarized -f console256 -g"
 alias aliases="c ~/.dotfiles/bash/bash_aliases"
 
 # IP addresses
-alias ip='IP=`dig +short myip.opendns.com @resolver1.opendns.com`; growlnotify -s -a terminal -t "IP Address" -m "${IP}"'
+# alias ip='IP=`dig +short myip.opendns.com @resolver1.opendns.com`; growlnotify -s -a terminal -t "IP Address" -m "${IP}"'
 alias lip='IP=`ipconfig getifaddr en0`; growlnotify -s -a terminal -t "Local IP" -m "${IP}"'
 
 # Copy my public key to the pasteboard
