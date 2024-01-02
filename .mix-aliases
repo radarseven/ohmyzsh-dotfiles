@@ -237,3 +237,7 @@ alias vmox:wem="cd ~/Sites/vMox/vmox/application"
 function bundleId() {
   osascript -e "id of app \"$1\""
 }
+
+function port() {
+  sudo lsof -i -P | grep LISTEN | grep :$1
+}
