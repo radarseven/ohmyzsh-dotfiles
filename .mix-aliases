@@ -241,3 +241,8 @@ function bundleId() {
 function port() {
   sudo lsof -i -P | grep LISTEN | grep :$1
 }
+
+# WebstaurantStore Stuff
+# DotNet - Clean Certs
+alis dotnet:certs-clean="dotnet dev-certs https --clean"
+alis dotnet:certs-build="dotnet dev-certs https --trust"
