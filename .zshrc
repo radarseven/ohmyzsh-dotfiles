@@ -59,7 +59,6 @@ POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="%{%B%F{black}%K{yellow}%} $user_symbo
 POWERLEVEL9K_VCS_MODIFIED_BACKGROUND='red'
 # Add a new line after the global prompt
 POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
-
 # ↓ May cause issues with PL10K Instant Prompt
 # @see https://github.com/romkatv/powerlevel10k/blob/master/README.md#how-do-i-configure-instant-prompt
 # ----
@@ -68,6 +67,7 @@ POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
 # echo -e "\033]6;1;bg;red;brightness;18\a"
 # echo -e "\033]6;1;bg;green;brightness;26\a"
 # echo -e "\033]6;1;bg;blue;brightness;33\a"
+POWERLEVEL9K_INSTANT_PROMPT=quiet
 
 # --- ZSH CONFIG -----------------------
 # Set to this to use case-sensitive completion

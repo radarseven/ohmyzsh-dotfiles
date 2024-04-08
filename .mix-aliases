@@ -244,5 +244,5 @@ function port() {
 
 # WebstaurantStore Stuff
 # DotNet - Clean Certs
-alis dotnet:certs-clean="dotnet dev-certs https --clean"
-alis dotnet:certs-build="dotnet dev-certs https --trust"
+alias dotnet:certs-clean="dotnet dev-certs https --clean"
+alias dotnet:certs-build="dotnet dev-certs https --trust"
