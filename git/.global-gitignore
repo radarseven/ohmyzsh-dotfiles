@@ -1,10 +1,5 @@
 # Compiled Python files
 *.pyc
-__pycache__/
-
-# Python virtual environments
-.venv/
-venv/
 
 # Folder view configuration files
 .DS_Store
@@ -18,31 +13,28 @@ Thumbs.db
 .Spotlight-V100
 .Trashes
 
-# Environment files
-.env
-.env.local
-.env*.local
-
 # IDE
-.idea/
+.idea
 *.code-workspace
-.vscode/
 
 # Sublime Text project files
 *.sublime*
 
 # Composer
-vendor/
+vendor
 vendor/bundle
 
 # Node
-node_modules/
+*node_modules*
+
+# Yarn
 yarn-error.log
 
-# Claude Code
-.claude/
+# JetBrains
+.idea/
 
-# Terraform
-.terraform/
-*.tfstate
-*.tfstate.backup
+# VS Code
+.vscode/
+
+# Claude
+.claude/
