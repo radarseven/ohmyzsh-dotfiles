@@ -94,6 +94,53 @@ git checkout -- shell/.zshrc       # Restore the clean version
 source ~/.zshrc                    # Reload
 ```
 
+## Syncing Another Machine
+
+Already have dotfiles in `~/` on another Mac that have drifted from this repo? Here's how to safely adopt the new setup without losing anything.
+
+**1. Clone (or pull) the repo**
+```bash
+# Fresh machine:
+git clone git@github.com:radarseven/ohmyzsh-dotfiles.git ~/.dotfiles
+
+# Already cloned:
+cd ~/.dotfiles && git pull
+```
+
+**2. Switch to enterprise and run bootstrap**
+```bash
+cd ~/.dotfiles
+git checkout enterprise
+./bootstrap.sh
+```
+This backs up all your existing `~/` dotfiles to `~/.dotfiles-backup/<timestamp>/`, then creates symlinks. Nothing is destroyed.
+
+**3. See what drifted**
+```bash
+git diff
+```
+Every file where your live version differed from the repo will show as modified. This is `stow --adopt` pulling in your live files so you can review them.
+
+**4. Decide what to keep**
+- **Keep repo version** (most common): `git checkout -- <file>`
+- **Keep everything from repo**: `git checkout -- .`
+- **Merge both**: edit the file to keep what you want, discard the rest
+- **Machine-specific stuff**: move it to `~/.mix-extra` (see below)
+
+**5. Move machine-specific config to `~/.mix-extra`**
+
+Anything unique to that machine (tool hooks, work config, API keys) should go in `~/.mix-extra`, not in the repo files. See the [Private Config](#private-config-mix-extra) section.
+
+**6. Reload and install tools**
+```bash
+source ~/.zshrc
+brew bundle          # Install Homebrew packages
+```
+
+**Your safety net**: backups are in `~/.dotfiles-backup/`. Check with `ls ~/.dotfiles-backup/`.
+
+---
+
 ## Beam Me Up, Scotty
 
 Not feeling the modernized setup? Don't worry — every run of `bootstrap.sh` automatically backs up your existing `~/` dotfiles to `~/.dotfiles-backup/<timestamp>/` before touching anything.
