@@ -1,9 +1,8 @@
 # --- ALIASES --------------------------
-alias s="subl ."
-alias bower='noglob bower' # On prezto or oh-my-zsh, do not forget to alias bower='noglob bower' or bower install jquery\#1.9.1
+
 alias rake='noglob rake' # https://github.com/robbyrussell/oh-my-zsh/issues/433
-alias sshkey="cat ~/.ssh/id_rsa.pub | pbcopy && echo 'Copied to clipboard.'"
-alias pyserver='open http://localhost:8000 && python -m SimpleHTTPServer'
+alias sshkey="cat ~/.ssh/id_ed25519.pub | pbcopy && echo 'Copied to clipboard.'"
+alias pyserver='open http://localhost:8000 && python3 -m http.server'
 alias refresh='source ~/.zshrc; echo "Reloaded .zshrc."'
 alias artisan='php artisan'
 alias oo='open .'
@@ -18,16 +17,10 @@ alias vhalt="vagrant halt"
 alias vkill="vagrant destroy"
 
 # Homestead
-alias hsconf="subl ~/Homestead/Homestead.yaml"
-
-# Check out .gitconfig for great Git aliases
-
-# Other fun custom config
-# bindkey "[D" backward-word
-# bindkey "[C" forward-word
+alias hsconf="code ~/Homestead/Homestead.yaml"
 
 
-# ---- FANCY DOTFILES-IMPORTED ALIASES ----------------
+# ---- SYSTEM & NETWORK ----------------
 
 # Gzip-enabled `curl`
 alias gurl='curl --compressed'
@@ -35,8 +28,8 @@ alias gurl='curl --compressed'
 # Get week number
 alias week='date +%V'
 
-# Get OS X Software Updates, and update installed Ruby gems, Homebrew, npm, and their installed packages
-alias update='sudo softwareupdate -i -a; brew update; brew upgrade; brew cleanup; npm update npm -g; npm update -g; sudo gem update'
+# Update everything
+alias update='sudo softwareupdate -i -a; brew update; brew upgrade; brew cleanup; npm update npm -g; npm update -g'
 
 # IP addresses
 alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
@@ -48,8 +41,9 @@ alias whois="whois -h whois-servers.net"
 
 # Flush Directory Service cache
 alias flush="dscacheutil -flushcache && killall -HUP mDNSResponder"
+alias flushdns="sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder; say DNS cache flushed;"
 
-# Clean up LaunchServices to remove duplicates in the “Open With” menu
+# Clean up LaunchServices to remove duplicates in the "Open With" menu
 alias lscleanup="/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user && killall Finder"
 
 # View HTTP traffic
@@ -57,38 +51,40 @@ alias sniff="sudo ngrep -d 'en1' -t '^(GET|POST) ' 'tcp and port 80'"
 alias httpdump="sudo tcpdump -i en0 -n -s 0 -w - | grep -a -o -E \"Host\: .*|GET \/.*\""
 
 # Empty the Trash on all mounted volumes and the main HDD
-# Also, clear Apple’s System Logs to improve shell startup speed
 alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; sudo rm -rfv ~/.Trash; sudo rm -rfv /private/var/log/asl/*.asl"
 
 # Show/hide hidden files in Finder
 alias show="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"
 alias hide="defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder"
+alias showdotfiles="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"
+alias hidedotfiles="defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder"
 
 # Hide/show all desktop icons (useful when presenting)
 alias hidedesktop="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
 alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
+alias showdeskicons="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
+alias hidedeskicons="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
 
 # URL-encode strings
-alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'
+alias urlencode='python3 -c "import sys, urllib.parse; print(urllib.parse.quote_plus(sys.argv[1]))"'
 
 # Merge PDF files
 # Usage: `mergepdf -o output.pdf input{1,2,3}.pdf`
 alias mergepdf='/System/Library/Automator/Combine\ PDF\ Pages.action/Contents/Resources/join.py'
 
-# Disable Spotlight
+# Disable/Enable Spotlight
 alias spotoff="sudo mdutil -a -i off"
-# Enable Spotlight
 alias spoton="sudo mdutil -a -i on"
 
-# PlistBuddy alias, because sometimes `defaults` just doesn’t cut it
+# PlistBuddy alias
 alias plistbuddy="/usr/libexec/PlistBuddy"
 
-# Ring the terminal bell, and put a badge on Terminal.app’s Dock icon
-# (useful when executing time-consuming commands)
+# Ring the terminal bell (useful when executing time-consuming commands)
 alias badge="tput bel"
 
-# --- MREINER --------------------------------------
-# Git
+
+# --- GIT --------------------------------------
+
 alias g="git"
 alias gs="git status"
 alias gb="git branch"
@@ -97,152 +93,109 @@ alias gc="git commit -v"
 alias gca="git commit -v -a"
 alias gco="git checkout"
 alias gd="git diff"
-alias gdm="git diff master"
-alias gh="github"
+alias gdm="git diff main"
 alias gl="git pull"
 alias gp="git push"
-# Commit pending changes and quote all args as commit message
-# function gg() {
-# 	git commit -v -a -m "$*"
-# }
-# Git archiving, filtered for modified files only
+
 # Git archiving
-function git_archive_modified_only()
-{
+function git_archive_modified_only() {
 	git archive --output="$1".zip HEAD $(git diff --name-only --diff-filter=M "$1" "$2" --stat)
 }
-# Git archiving
-function git_archive()
-{
+function git_archive() {
 	git archive --output="$1".zip HEAD $(git diff --name-only "$1" "$2" --stat)
 }
+
+# Clean out merged local branches
+alias git:clean="git branch --merged | egrep -v \"(^\*|main|dev)\" | xargs git branch -d"
 
 # Allow aliases to be with sudo
 alias sudo="sudo "
 
-# Easier navigation: .., ..., ~ and -
+
+# --- NAVIGATION -------------------------------
+
+# Easier navigation
 alias ..="cd .."
 alias ...="cd ../.."
 alias ~="cd ~"
 alias -- -="cd -"
 
-# List dir contents aliases
-# ref: http://ss64.com/osx/ls.html
-# Long form no user group, color
-alias l="ls -oG"
-# Order by last modified, long form no user group, color
-alias lt="ls -toG"
-# List all except . and ..., color, mark file types, long form no user group, file size
-alias la="ls -AGFoh"
-# List all except . and ..., color, mark file types, long form no use group, order by last modified, file size
-alias lat="ls -AGFoth"
-
-# Concatenate and print content of files (add line numbers)
-alias catn="cat -n"
-
-# Fancycat™
-alias c="pygmentize -O style=solarized -f console256 -g"
-
-# “What was that alias again?” Meta!
-alias aliases="c ~/.dotfiles/bash/bash_aliases"
-
-# IP addresses
-# alias ip='IP=`dig +short myip.opendns.com @resolver1.opendns.com`; growlnotify -s -a terminal -t "IP Address" -m "${IP}"'
-alias lip='IP=`ipconfig getifaddr en0`; growlnotify -s -a terminal -t "Local IP" -m "${IP}"'
-
-# Copy my public key to the pasteboard
-alias pubkey="more ~/.ssh/id_rsa.pub | pbcopy | printf '=> Public key copied to pasteboard.\n'"
-
-# Flush DNS cache
-# alias flushdns="dscacheutil -flushcache"
-alias flushdns="sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder; say DNS cache flushed;"
-
-# Empty the Trash on all mounted volumes and the main HDD
-# Also, clear Apple’s System Logs to improve shell startup speed
-alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; sudo rm -rfv ~/.Trash; sudo rm -rfv /private/var/log/asl/*.asl"
-
-# Show/hide hidden files in Finder
-alias showdotfiles="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"
-alias hidedotfiles="defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder"
-
-# Hide/show all desktop icons (useful when presenting)
-alias showdeskicons="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
-alias hidedeskicons="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
-
-# Processes
-alias tu="top -o cpu" # cpu
-alias tm="top -o vsize" # memory
-
-# SSH Tunnels
-function sshtun() {
-	ssh -N $1 -L $2:127.0.0.1:$3
-}
-
-# Common
-#alias l="ls -laGH"
-
-# Timestamp
-alias ts="date +%s | pbcopy"
-
-# Speed
-#alias ..="cd ../" # up 1 directory
-
 # Sites
 alias sites="cd ~/Sites"
 
-# Get public facing IP
-alias getip="curl -s http://checkip.dyndns.org | sed 's/[a-zA-Z/<> :]//g'"
-
-# cd into whatever is the forefront Finder window.
-cdf() {  # short for cdfinder
+# cd into whatever is the forefront Finder window
+cdf() {
   cd "`osascript -e 'tell app "Finder" to POSIX path of (insertion location as alias)'`"
 }
 
-# Reload the shell (i.e. invoke as a login shell)
+# Reload the shell
 alias reload="exec ${SHELL} -l"
 
 # Print each PATH entry on a separate line
 alias path='echo -e ${PATH//:/\\n}'
 
-# --- Dandelion -------------------------------------
-alias deployProd="dandelion --config=dandelion.prod.yml deploy"
 
-# Make it Craft!
-# https://github.com/mattstauffer/makeItCraft
-alias makeItCraft="bash <(curl -s https://raw.githubusercontent.com/mattstauffer/makeItCraft/master/makeItCraft.sh)"
+# --- MODERN CLI TOOLS -------------------------
+
+# eza (modern ls)
+alias ls="eza --icons --group-directories-first"
+alias l="eza -l --icons --group-directories-first"
+alias la="eza -la --icons --group-directories-first"
+alias lt="eza -l --icons --sort=modified"
+alias lat="eza -la --icons --sort=modified"
+alias tree="eza --tree --icons"
+
+# bat (modern cat)
+alias cat="bat --paging=never"
+alias catn="bat --paging=never --number"
+alias c="bat"
+
+# Processes
+alias tu="top -o cpu"
+alias tm="top -o vsize"
+
+# Timestamp to clipboard
+alias ts="date +%s | pbcopy"
+
+# Get public facing IP
+alias getip="curl -s http://checkip.dyndns.org | sed 's/[a-zA-Z/<> :]//g'"
+
+# Copy my public key to the pasteboard
+alias pubkey="more ~/.ssh/id_ed25519.pub | pbcopy | printf '=> Public key copied to pasteboard.\n'"
+
+
+# --- SSH & TUNNELS ----------------------------
+
+function sshtun() {
+	ssh -N $1 -L $2:127.0.0.1:$3
+}
+
+
+# --- FUNCTIONS --------------------------------
+
+# Get the bundle ID of an app (useful for 1Password autofill)
+function bundleId() {
+  osascript -e "id of app \"$1\""
+}
+
+# Find what's using a port
+function port() {
+  sudo lsof -i -P | grep LISTEN | grep :$1
+}
 
 # Homestead wrapper for Vagrant
 function homestead() {
     ( cd ~/Homestead && vagrant $* )
 }
 
-# Clean out merged local branches
-# @url: https://stackoverflow.com/questions/6127328/how-can-i-delete-all-git-branches-which-have-been-merged
-alias git:clean="git branch --merged | egrep -v \"(^\*|master|dev)\" | xargs git branch -d"
 
-# START: vMox
-alias acg="cd ~/Sites/vMox/acg && ll"
-alias acg:cc="cd ~/Sites/vMox/acg/command_center"
-alias acg:ob="cd ~/Sites/vMox/acg/application"
-alias vmox="cd ~/Sites/vMox/vmox && ll"
-alias vmox:sql="bundle exec rake imports:sql"
-alias kiwi:compile="RAILS_ENV=production bundle exec rake assets:clobber assets:precompile assets:clean"
-alias vmox:cop="cd ~/Sites/vMox/vmox/one_portal"
-alias vmox:wem="cd ~/Sites/vMox/vmox/application"
-# END: vMox
+# --- LARAVEL ----------------------------------
 
-# Get the bundle ID of an app
-# Can be used as the `website` value in 1Password for macOS apps to enable autofill
-# https://superuser.com/q/346369
-function bundleId() {
-  osascript -e "id of app \"$1\""
-}
+alias sail='[ -f sail ] && sh sail || sh vendor/bin/sail'
 
-function port() {
-  sudo lsof -i -P | grep LISTEN | grep :$1
-}
 
-# WebstaurantStore Stuff
-# DotNet - Clean Certs
-alias dotnet:certs-clean="dotnet dev-certs https --clean"
-alias dotnet:certs-build="dotnet dev-certs https --trust"
+# --- AI / CLAUDE CODE -------------------------
+
+alias cc="claude"
+alias ccc="claude --continue"
+alias ccr="claude --resume"
