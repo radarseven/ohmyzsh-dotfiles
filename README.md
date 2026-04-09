@@ -60,9 +60,37 @@ stow -R -t ~ shell    # Just shell config
 stow -R -t ~ git      # Just git config
 ```
 
-### Private Config
+### Private Config (`~/.mix-extra`)
 
-Create `~/.mix-extra` for anything you don't want in version control (API keys, work-specific aliases, etc.). It's sourced automatically by `.zshrc` and is not tracked by git.
+`~/.mix-extra` is your machine-specific, private config file. It's sourced automatically by `.zshrc` (after oh-my-zsh loads, so completions work) and is **never committed** to the repo.
+
+**What goes where:**
+
+| File | What goes in it | In repo? |
+|------|----------------|----------|
+| `shell/.mix-aliases` | Aliases and functions | Yes |
+| `shell/.mix-path` | PATH additions | Yes |
+| `shell/.mix-exports` | Environment variables | Yes |
+| `~/.mix-extra` | Secrets, API keys, machine-specific tools | No |
+
+**Put things in `.mix-extra` when they are:**
+- API keys, tokens, or secrets
+- Tool hooks that are machine-specific (Herd PHP, Kiro CLI, OpenClaw, etc.)
+- Work-specific config you don't want public
+- Anything auto-injected by installers (see below)
+
+**Dealing with tools that auto-inject into `.zshrc`:**
+
+Since `~/.zshrc` is a symlink to the repo, tools that auto-modify it (like Herd, Kiro, etc.) will dirty your git state. When this happens:
+
+```bash
+cd ~/.dotfiles
+git diff shell/.zshrc              # See what got injected
+# Move the injected lines to ~/.mix-extra
+code ~/.mix-extra
+git checkout -- shell/.zshrc       # Restore the clean version
+source ~/.zshrc                    # Reload
+```
 
 ## Beam Me Up, Scotty
 
