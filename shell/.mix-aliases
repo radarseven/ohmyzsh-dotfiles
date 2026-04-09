@@ -189,6 +189,11 @@ function homestead() {
 }
 
 
+# --- LARAVEL ----------------------------------
+
+alias sail='[ -f sail ] && sh sail || sh vendor/bin/sail'
+
+
 # --- AI / CLAUDE CODE -------------------------
 
 alias cc="claude"
