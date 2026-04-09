@@ -10,10 +10,8 @@ ZSH=$HOME/.oh-my-zsh
 # Disable OMZ theme (using Starship instead)
 ZSH_THEME=""
 
-# Load the shell dotfiles, and then some:
-# * ~/.mix-path can be used to extend `$PATH`.
-# * ~/.mix-extra can be used for other settings you don't want to commit to your repo.
-for file in ~/.mix-{path,exports,aliases,extra}; do
+# Load path and environment config (before oh-my-zsh)
+for file in ~/.mix-{path,exports,aliases}; do
 	[ -r "$file" ] && source "$file"
 done
 unset file
@@ -35,6 +33,9 @@ plugins=(
 )
 
 source $ZSH/oh-my-zsh.sh
+
+# Load private/machine-specific config (after oh-my-zsh, so compdef is available)
+[ -r ~/.mix-extra ] && source ~/.mix-extra
 
 # --- TOOL INITIALIZATION ----------------------
 
