@@ -44,30 +44,16 @@ EXTRA
 
 ## 3. Set Work Git Email
 
-Don't change the repo's `.gitconfig` (it uses your personal email by default). Instead, use git's `includeIf` to automatically switch to your work email for work repos.
-
-Add this to `~/.mix-extra` or run it once:
+The repo's `.gitconfig` includes `~/.gitconfig.local` (which git silently ignores if missing). Create it on this machine to override your email globally:
 
 ```bash
-git config --global includeIf."gitdir:~/Sites/WebstaurantStore/".path ~/Sites/WebstaurantStore/.gitconfig
-```
-
-Then create `~/Sites/WebstaurantStore/.gitconfig`:
-
-```ini
+cat > ~/.gitconfig.local << 'EOF'
 [user]
-    email = mreiner@webstaurantstore.com
+    email = my@workemail.gov
+EOF
 ```
 
-Now any repo under `~/Sites/WebstaurantStore/` automatically uses your work email. Everything else uses your personal email. Adjust the path to wherever your work repos live.
-
-**Alternative** (simpler but less elegant): override globally on this machine only:
-
-```bash
-git config --global user.email "mreiner@webstaurantstore.com"
-```
-
-This changes `~/.gitconfig` directly (which is a symlink to the repo), so you'd need to `git checkout -- git/.gitconfig` afterward to keep the repo clean. The `includeIf` approach avoids this entirely.
+This file is never committed. All repos on this machine will use your work email.
 
 ## 4. Reload
 
