@@ -1,0 +1,108 @@
+# Starship Prompt Configuration
+# https://starship.rs/config/
+"$schema" = 'https://starship.rs/config-schema.json'
+
+# General
+add_newline = true
+
+format = """
+$directory\
+$git_branch\
+$git_status\
+$nodejs\
+$php\
+$ruby\
+$python\
+$docker_context\
+$cmd_duration\
+$line_break\
+$character"""
+
+# Prompt character
+[character]
+success_symbol = "[❯](bold green)"
+error_symbol = "[❯](bold red)"
+vimcmd_symbol = "[❮](bold green)"
+
+# Directory
+[directory]
+truncation_length = 3
+truncation_symbol = "…/"
+read_only = " 󰌾"
+style = "bold cyan"
+
+# Git
+[git_branch]
+symbol = " "
+style = "bold purple"
+
+[git_status]
+style = "bold red"
+ahead = "⇡${count}"
+behind = "⇣${count}"
+diverged = "⇕⇡${ahead_count}⇣${behind_count}"
+modified = "!${count}"
+staged = "+${count}"
+untracked = "?${count}"
+stashed = "*${count}"
+
+# Languages & Runtimes
+[nodejs]
+symbol = " "
+style = "bold green"
+
+[php]
+symbol = " "
+style = "bold blue"
+
+[ruby]
+symbol = " "
+style = "bold red"
+
+[python]
+symbol = " "
+style = "bold yellow"
+
+# Docker
+[docker_context]
+symbol = " "
+style = "bold blue"
+
+# Command duration (show for commands > 2 seconds)
+[cmd_duration]
+min_time = 2_000
+format = "took [$duration](bold yellow) "
+
+# Nerd Font symbols for other tools
+[aws]
+symbol = " "
+
+[buf]
+symbol = " "
+
+[c]
+symbol = " "
+
+[conda]
+symbol = " "
+
+[dart]
+symbol = " "
+
+[golang]
+symbol = " "
+
+[java]
+symbol = " "
+
+[lua]
+symbol = " "
+
+[package]
+symbol = "󰏗 "
+
+[rust]
+symbol = "󱘗 "
+
+[terraform]
+symbol = "󱁢 "

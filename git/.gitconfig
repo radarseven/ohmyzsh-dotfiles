@@ -12,7 +12,7 @@
 	# `git di $number` shows the diff between the state `$number` revisions ago and the current state
 	di = !"d() { git diff --patch-with-stat HEAD~$1; }; git diff-index --quiet HEAD -- || clear; d"
 	# Pull in remote changes for the current repository and all its submodules
-	p = !"git pull; git submodule foreach git pull origin master"
+	p = !"git pull; git submodule foreach git pull origin main"
 	# Clone a repository including all submodules
 	c = clone --recursive
 	# Commit all changes
@@ -27,48 +27,59 @@
 	credit = "!f() { git commit --amend --author \"$1 <$2>\" -C HEAD; }; f"
 	# Interactive rebase with the given number of latest commits
 	reb = "!r() { git rebase -i HEAD~$1; }; r"
-	# vMox/Advantage
 	co = checkout
-	updateall = remote update
-	masterprep = rebase -i origin/master
-	masterpush = push origin HEAD:refs/for/master
-	comaster = !git co master && git pull
-	newmaster = !git checkout && git pull && git checkout -b
-	# /END vMox/Advantage
+
 [apply]
 	# Detect whitespace errors when applying a patch
 	whitespace = fix
 
 [core]
-	# Use custom `.gitignore` and `.gitattributes`
+	# Use custom `.gitignore`
 	excludesfile = ~/.global-gitignore
-	# Treat spaces before tabs, lines that are indented with 8 or more spaces, and all kinds of trailing whitespace as an error
+	# Treat spaces before tabs and trailing whitespace as errors
 	whitespace = space-before-tab,indent-with-non-tab,trailing-space
+	# Use delta for all diffs
+	pager = delta
+
+[interactive]
+	diffFilter = delta --color-only
+
+[delta]
+	navigate = true
+	side-by-side = true
+	line-numbers = true
+	syntax-theme = Dracula
+
+[init]
+	defaultBranch = main
+
+[pull]
+	rebase = true
+
+[push]
+	default = current
+	autoSetupRemote = true
+
+[rerere]
+	enabled = true
+
+[diff]
+	colorMoved = default
 
 [color]
-	# Use colors in Git commands that are capable of colored output when outputting to the terminal
 	ui = auto
 [color "branch"]
 	current = yellow reverse
 	local = yellow
 	remote = green
-[color "diff"]
-	meta = yellow bold
-	frag = magenta bold
-	old = red bold
-	new = green bold
 [color "status"]
 	added = yellow
 	changed = green
 	untracked = cyan
+
 [merge]
 	# Include summaries of merged commits in newly created merge commit messages
 	log = true
-
-# Use `origin` as the default remote on the `master` branch in all cases
-[branch "master"]
-	remote = origin
-	merge = refs/heads/master
 
 # URL shorthands
 [url "git@github.com:"]
@@ -83,6 +94,3 @@
 	pushInsteadOf = "git://gist.github.com/"
 [url "git://gist.github.com/"]
 	insteadOf = "gist:"
-
-[push]
-	default = matching

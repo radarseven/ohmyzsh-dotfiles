@@ -1,73 +1,161 @@
-# Michael's Dotfiles: *Adapted from Mathias and Paul Irish for ZSH by Matt Stauffer.*
+# Michael's Dotfiles
+
+macOS dotfiles for an opinionated terminal setup. Managed with [GNU Stow](https://www.gnu.org/software/stow/), powered by ZSH + [Oh-My-Zsh](https://ohmyz.sh/) + [Starship](https://starship.rs/).
+
+Originally adapted from [Mathias Bynens' dotfiles](https://github.com/mathiasbynens/dotfiles), heavily customized over the years, and comprehensively modernized in April 2026 (see [docs/RIKERIZE.md](docs/RIKERIZE.md)).
+
+## What's Inside
+
+| Package | Contents | Stowed to |
+|---------|----------|-----------|
+| `shell/` | .zshrc, .mix-aliases, .mix-exports, .mix-path | `~/` |
+| `git/` | .gitconfig, .global-gitignore | `~/` |
+| `vim/` | .vimrc, .gvimrc, .vim/ | `~/` |
+| `wget/` | .wgetrc | `~/` |
+| `bin/` | Custom scripts | `~/bin/` |
+| `config/` | starship.toml | `~/.config/` |
+
+Plus:
+- `Brewfile` — Homebrew packages (`brew bundle` to install)
+- `bootstrap.sh` — Symlinks everything to `~/` via Stow
+- `.osx` — macOS system defaults (run manually, review first)
+
+## Modern CLI Tools
+
+These dotfiles alias standard commands to modern replacements:
+
+| You type | You get | Why |
+|----------|---------|-----|
+| `ls` | [eza](https://github.com/eza-community/eza) | Icons, git awareness, tree view |
+| `cat` | [bat](https://github.com/sharkdp/bat) | Syntax highlighting |
+| `grep` | [ripgrep](https://github.com/BurntSushi/ripgrep) (as `rg`) | Much faster, respects .gitignore |
+| `find` | [fd](https://github.com/sharkdp/fd) (as `fd`) | Simpler syntax, faster |
+| `cd` | [zoxide](https://github.com/ajeetdsouza/zoxide) (as `z`) | Learns your habits |
+| Ctrl-R | [fzf](https://github.com/junegunn/fzf) | Fuzzy history search |
+| `git diff` | [delta](https://github.com/dandavison/delta) | Side-by-side, syntax highlighting |
 
 ## Installation
 
-### Using Git and the bootstrap script
-
-You can clone the repository wherever you want. (I like to keep it in `~/Projects/dotfiles`, with `~/dotfiles` as a symlink.) The bootstrapper script will pull in the latest version and copy the files to your home folder.
+### Quick Start
 
 ```bash
-git clone https://github.com/radarseven/ohmyzsh-dotfiles.git
+git clone git@github.com:radarseven/ohmyzsh-dotfiles.git ~/.dotfiles
+cd ~/.dotfiles
+./bootstrap.sh     # Symlink everything to ~/
+brew bundle         # Install Homebrew packages
+source ~/.zshrc     # Reload shell
 ```
 
-#### Bootstrap
+### Prerequisites
 
-~~The bootstrap.sh file currently doesn't work, so just copy any of the dotfiles you like into your home directory.~~
+- macOS with [Homebrew](https://brew.sh/) installed
+- [Oh-My-Zsh](https://ohmyz.sh/) installed
+- A [Nerd Font](https://www.nerdfonts.com/) for terminal icons (e.g., MesloLGS NF)
 
-**Bootstrap now works!** Run `bash bootstrap.sh` to copy files into the `~` directory.
-
-This should be run anytime changes are made in this repo.
-
-### Git-free install
-
-To install these dotfiles without Git:
+### Stow a Single Package
 
 ```bash
-cd; curl -#L https://github.com/radarseven/ohmyzsh-dotfiles/tarball/master | tar -xzv --strip-components 1 --exclude={README.md,bootstrap.sh}
+cd ~/.dotfiles
+stow -R -t ~ shell    # Just shell config
+stow -R -t ~ git      # Just git config
 ```
 
-To update later on, just run that command again.
+### Private Config
 
-### Specify the `$PATH`
+Create `~/.mix-extra` for anything you don't want in version control (API keys, work-specific aliases, etc.). It's sourced automatically by `.zshrc` and is not tracked by git.
 
-If `~/.mix-path` exists, it will be sourced along with the other files, before any feature testing (such as [detecting which version of `ls` is being used](https://github.com/mathiasbynens/dotfiles/blob/aff769fd75225d8f2e481185a71d5e05b76002dc/.aliases#L21-26)) takes place.
+## Beam Me Up, Scotty
 
-Here’s an example `~/.mix-path` file that adds `~/utils` to the `$PATH`:
+Not feeling the modernized setup? Don't worry — every run of `bootstrap.sh` automatically backs up your existing `~/` dotfiles to `~/.dotfiles-backup/<timestamp>/` before touching anything.
+
+### Restore from Backup
+
+If something goes sideways, your previous files are safe:
 
 ```bash
-export PATH="$HOME/utils:$PATH"
+cd ~/.dotfiles
+
+# 1. Unstow everything (removes symlinks from ~/)
+stow -D -t ~ shell git vim wget bin config
+
+# 2. Copy your backed-up files back
+cp -a ~/.dotfiles-backup/<timestamp>/. ~/
+
+# 3. Reload
+source ~/.zshrc
 ```
 
-### Add custom commands without creating a new fork
+List available backups with `ls ~/.dotfiles-backup/`.
 
-If `~/.mix-extra` exists, it will be sourced along with the other files. You can use this to add a few custom commands without the need to fork this entire repository, or to add commands you don’t want to commit to a public repository.
+### Full Rollback to Pre-Modernization
 
-### **UPDATED**: Install Homebrew formulae
+```bash
+cd ~/.dotfiles
 
-#### `brew bundle` no longer supported
+# 1. Unstow all current packages (removes symlinks from ~/)
+stow -D -t ~ shell git vim wget bin config
 
-See `/setup/osx-setup-part1-.md` for a new approach on how to install apps using Homebrew.
+# 2. Switch to the legacy branch
+git checkout beam-me-up-scotty
 
-~~When setting up a new Mac, you may want to install some common [Homebrew](http://brew.sh/) formulae (after installing Homebrew, of course):~~
+# 3. Run the old rsync bootstrap (copies files to ~/)
+./bootstrap.sh
 
-## Original (Bash dotfiles) Author
+# 4. Reload your shell
+source ~/.zshrc
+```
 
-| [![twitter/mathias](http://gravatar.com/avatar/24e08a9ea84deb17ae121074d0f17125?s=70)](http://twitter.com/mathias "Follow @mathias on Twitter") |
-|---|
-| [Mathias Bynens](http://mathiasbynens.be/) |
+### Return to Enterprise
 
-## Thanks to…
+```bash
+cd ~/.dotfiles
 
-* @ptb and [his _OS X Lion Setup_ repository](https://github.com/ptb/Mac-OS-X-Lion-Setup)
-* [Ben Alman](http://benalman.com/) and his [dotfiles repository](https://github.com/cowboy/dotfiles)
-* [Chris Gerke](http://www.randomsquared.com/) and his [tutorial on creating an OS X SOE master image](http://chris-gerke.blogspot.com/2012/04/mac-osx-soe-master-image-day-7.html) + [_Insta_ repository](https://github.com/cgerke/Insta)
-* [Cãtãlin Mariş](https://github.com/alrra) and his [dotfiles repository](https://github.com/alrra/dotfiles)
-* [Gianni Chiappetta](http://gf3.ca/) for sharing his [amazing collection of dotfiles](https://github.com/gf3/dotfiles)
-* [Jan Moesen](http://jan.moesen.nu/) and his [ancient `.bash_profile`](https://gist.github.com/1156154) + [shiny _tilde_ repository](https://github.com/janmoesen/tilde)
-* [Lauri ‘Lri’ Ranta](http://lri.me/) for sharing [loads of hidden preferences](http://lri.me/osx.html#hidden-preferences)
-* [Matijs Brinkhuis](http://hotfusion.nl/) and his [dotfiles repository](https://github.com/matijs/dotfiles)
-* [Nicolas Gallagher](http://nicolasgallagher.com/) and his [dotfiles repository](https://github.com/necolas/dotfiles)
-* [Sindre Sorhus](http://sindresorhus.com/)
-* [Tom Ryder](http://blog.sanctum.geek.nz/) and his [dotfiles repository](https://github.com/tejr/dotfiles)
+# 1. Switch back to the modernized branch
+git checkout enterprise
 
-* anyone who [contributed a patch](https://github.com/mathiasbynens/dotfiles/contributors) or [made a helpful suggestion](https://github.com/mathiasbynens/dotfiles/issues)
+# 2. Run the stow bootstrap (creates symlinks in ~/)
+./bootstrap.sh
+
+# 3. Reload your shell
+source ~/.zshrc
+```
+
+### Just Peek at the Old Setup
+
+```bash
+# View the old configs without switching
+git show beam-me-up-scotty:.zshrc
+git show beam-me-up-scotty:.mix-aliases
+git diff beam-me-up-scotty..enterprise -- shell/.mix-aliases
+```
+
+## Branches & Tags
+
+| Name | Type | Purpose |
+|------|------|---------|
+| `enterprise` | branch | Main branch (modernized, Stow-based) |
+| `beam-me-up-scotty` | branch | Legacy snapshot (rsync-based, pre-2026) |
+| `legacy/pre-modernization` | tag | Exact commit before modernization began |
+| `hell-yaw` | tag | Same commit. You know what it means. |
+
+## The RIKERIZE
+
+For the full story of the modernization — what changed, why, and all the gory details — see [docs/RIKERIZE.md](docs/RIKERIZE.md).
+
+## Shell Aliases Cheat Sheet
+
+```bash
+cc          # Launch Claude Code
+ccc         # Continue last Claude conversation
+ccr         # Resume a Claude conversation
+refresh     # Reload .zshrc
+z <partial> # Smart cd (zoxide)
+tree        # Directory tree with icons
+c <file>    # Syntax-highlighted file view (bat)
+```
+
+See `shell/.mix-aliases` for the full list.
+
+## Credits
+
+Originally based on [Mathias Bynens' dotfiles](https://github.com/mathiasbynens/dotfiles), adapted for ZSH by [Matt Stauffer](https://github.com/mattstauffer), and rikerized with [Claude Code](https://claude.ai/code).

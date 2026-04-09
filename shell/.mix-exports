@@ -1,0 +1,8 @@
+# --- EXPORTS ------------------------------------
+
+# Default editor
+export EDITOR='code -w'
+
+# Prefer US English and UTF-8
+export LANG="en_US"
+export LC_ALL="en_US.UTF-8"
