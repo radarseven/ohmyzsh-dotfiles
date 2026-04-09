@@ -1,4 +1,8 @@
+# Tokyo Night Preset
+# https://starship.rs/presets/tokyo-night#tokyo-night-preset
 "$schema" = 'https://starship.rs/config-schema.json'
+
+scan_timeout = 300
 
 format = """
 [░▒▓](#a3aed2)\
