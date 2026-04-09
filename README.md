@@ -1,5 +1,7 @@
 # Michael's Dotfiles
 
+![Rikerized](docs/rikerized.jpg)
+
 macOS dotfiles for an opinionated terminal setup. Managed with [GNU Stow](https://www.gnu.org/software/stow/), powered by ZSH + [Oh-My-Zsh](https://ohmyz.sh/) + [Starship](https://starship.rs/).
 
 Originally adapted from [Mathias Bynens' dotfiles](https://github.com/mathiasbynens/dotfiles), heavily customized over the years, and comprehensively modernized in April 2026 (see [docs/RIKERIZE.md](docs/RIKERIZE.md)).
