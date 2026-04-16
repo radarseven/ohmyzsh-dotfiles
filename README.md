@@ -15,7 +15,9 @@ Originally adapted from [Mathias Bynens' dotfiles](https://github.com/mathiasbyn
 | `vim/` | .vimrc, .gvimrc, .vim/ | `~/` |
 | `wget/` | .wgetrc | `~/` |
 | `bin/` | Custom scripts | `~/bin/` |
-| `config/` | starship.toml | `~/.config/` |
+| `config/` | starship.toml, starship-ssh.toml | `~/.config/` |
+| `ssh/` | .ssh/config | `~/` |
+| `fonts/` | figlet fonts (bigmoney-nw) | installed by bootstrap |
 
 Plus:
 - `Brewfile` — Homebrew packages (`brew bundle` to install)
@@ -218,6 +220,32 @@ git diff beam-me-up-scotty..enterprise -- shell/.mix-aliases
 ## The RIKERIZE
 
 For the full story of the modernization — what changed, why, and all the gory details — see [docs/RIKERIZE.md](docs/RIKERIZE.md).
+
+## SSH Config
+
+SSH config is managed via stow from `ssh/.ssh/config`. Keys live in `~/.ssh/keys/` and are **never committed** to the repo.
+
+## Starship Prompt
+
+Two configs live in `config/.config/`:
+
+| File | Used when |
+|------|-----------|
+| `starship.toml` | Local terminal (Tokyo Night theme with Nerd Font icons) |
+| `starship-ssh.toml` | SSH sessions (clean text-only, mobile-friendly) |
+
+SSH detection is automatic via `~/.zshrc` — no manual switching needed.
+
+## figlet ASCII Art
+
+The **Big Money-nw** font is stored in `fonts/bigmoney-nw.flf` and installed by `bootstrap.sh`.
+
+Usage:
+```bash
+figlet -f bigmoney-nw "Your Text"
+```
+
+Used in `~/.ssh/config` for section headers. Generate new ones the same way.
 
 ## Shell Aliases Cheat Sheet
 
