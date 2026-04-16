@@ -57,6 +57,16 @@ fi
 
 echo "  Backup complete."
 
+# --- FIGLET FONTS ---
+echo ""
+echo "🔤 Installing figlet fonts..."
+if command -v figlet &> /dev/null; then
+    FIGLET_FONTS_DIR=$(figlet -I 2 2>/dev/null || echo "/opt/homebrew/share/figlet/fonts")
+    cp -v "$DOTFILES_DIR"/fonts/*.flf "$FIGLET_FONTS_DIR/" 2>/dev/null && echo "  ✓ figlet fonts installed" || echo "  ⚠ Could not install figlet fonts"
+else
+    echo "  ⚠ figlet not installed — skipping fonts (run: brew install figlet)"
+fi
+
 # --- STOW PACKAGES ---
 echo ""
 echo "🔗 Symlinking packages..."
