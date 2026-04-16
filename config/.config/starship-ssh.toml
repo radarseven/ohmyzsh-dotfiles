@@ -5,16 +5,7 @@
 scan_timeout = 300
 
 format = """
-[📱 ](bold #FF6600)\
-$username\
-$hostname\
-$directory\
-$git_branch\
-$git_status\
-$nodejs\
-$php\
-$time\
-$line_break\
+$username$hostname$directory$git_branch$git_status$nodejs$php$time
 $character"""
 
 [username]
@@ -26,7 +17,7 @@ format = "[$user]($style)"
 [hostname]
 ssh_only = false
 style = "bold yellow"
-format = " @ [$hostname]($style)"
+format = "@[$hostname]($style)"
 
 [directory]
 style = "bold cyan"
@@ -41,7 +32,7 @@ format = " [$symbol$branch]($style)"
 
 [git_status]
 style = "bold red"
-format = '([$all_status$ahead_behind]($style))'
+format = '[$all_status$ahead_behind]($style)'
 
 [nodejs]
 symbol = "node:"
