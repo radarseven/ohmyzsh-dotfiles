@@ -5,6 +5,7 @@
 scan_timeout = 300
 
 format = """
+[📱 ](bold white)\
 $username\
 $hostname\
 $directory\
