@@ -223,7 +223,31 @@ For the full story of the modernization — what changed, why, and all the gory 
 
 ## SSH Config
 
-SSH config is managed via stow from `ssh/.ssh/config`. Keys live in `~/.ssh/keys/` and are **never committed** to the repo.
+SSH config is managed via stow from `ssh/.ssh/config`. Keys are managed via **1Password SSH Agent** — never stored on disk.
+
+### New Machine Setup
+
+1. Install 1Password + enable SSH agent: **Settings → Developer → Use the SSH agent**
+2. Make sure your keys are in 1Password (check the **The Reiners** vault)
+3. Add **The Reiners** vault to `~/.config/1Password/ssh/agent.toml`:
+   ```toml
+   [[ssh-keys]]
+   vault = "The Reiners"
+   ```
+4. Add this to `~/.mix-extra` (not committed — do this manually on each machine):
+   ```bash
+   # 1Password SSH Agent
+   export SSH_AUTH_SOCK=~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock
+   ```
+5. Reload: `source ~/.zshrc`
+6. Verify: `ssh-add -l` — should list your keys
+
+### Keys in 1Password (The Reiners vault)
+
+| Key | Used for |
+|-----|----------|
+| `MilleniumFalcon - id_ed25519` | General SSH, GitHub, Home Assistant |
+| `WP Engine Git Key` | WP Engine git push (legacy, may be inactive) |
 
 ## Starship Prompt
 
