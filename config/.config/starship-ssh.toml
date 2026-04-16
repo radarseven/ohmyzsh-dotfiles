@@ -1,0 +1,63 @@
+# Starship — SSH prompt (mobile-friendly, no Nerd Font icons)
+# Loaded automatically when connecting via SSH (see shell/.zshrc)
+"$schema" = 'https://starship.rs/config-schema.json'
+
+scan_timeout = 300
+
+format = """
+$username\
+$hostname\
+$directory\
+$git_branch\
+$git_status\
+$nodejs\
+$php\
+$time\
+$line_break\
+$character"""
+
+[username]
+show_always = true
+style_user = "bold green"
+style_root = "bold red"
+format = "[$user]($style)"
+
+[hostname]
+ssh_only = false
+style = "bold yellow"
+format = " @ [$hostname]($style)"
+
+[directory]
+style = "bold cyan"
+format = " [$path]($style)"
+truncation_length = 3
+truncation_symbol = ".../"
+
+[git_branch]
+symbol = ""
+style = "bold purple"
+format = " [$symbol$branch]($style)"
+
+[git_status]
+style = "bold red"
+format = '([$all_status$ahead_behind]($style))'
+
+[nodejs]
+symbol = "node:"
+style = "bold green"
+format = " [$symbol($version)]($style)"
+
+[php]
+symbol = "php:"
+style = "bold blue"
+format = " [$symbol($version)]($style)"
+
+[time]
+disabled = false
+time_format = "%H:%M"
+style = "dimmed white"
+format = " [$time]($style)"
+
+[character]
+success_symbol = "[>](bold green)"
+error_symbol = "[>](bold red)"

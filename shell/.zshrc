@@ -1,3 +1,7 @@
+
+# Kiro CLI pre block. Keep at the top of this file.
+[[ -f "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.pre.zsh" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.pre.zsh"
+
 # Add `~/bin` to the `$PATH`
 export PATH="$HOME/bin:$PATH"
 
@@ -52,5 +56,21 @@ eval "$(zoxide init zsh)"
 # zsh-syntax-highlighting (must be near end of .zshrc)
 source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
 
+# Use SSH-friendly Starship config when connecting remotely (no Nerd Font icons)
+if [[ -n "$SSH_CLIENT" ]] || [[ -n "$SSH_TTY" ]]; then
+  export STARSHIP_CONFIG="$HOME/.config/starship-ssh.toml"
+fi
+
 # Starship prompt (must be last)
 eval "$(starship init zsh)"
+
+
+# Herd injected PHP 8.4 configuration.
+export HERD_PHP_84_INI_SCAN_DIR="/Volumes/SSD/Users/michael/Library/Application Support/Herd/config/php/84/"
+
+
+# Kiro CLI post block. Keep at the bottom of this file.
+[[ -f "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.post.zsh"
+
+# OpenClaw Completion
+source "/Volumes/SSD/Users/michael/.openclaw/completions/openclaw.zsh"
