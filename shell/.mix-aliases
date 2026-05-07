@@ -199,3 +199,7 @@ alias sail='[ -f sail ] && sh sail || sh vendor/bin/sail'
 alias cc="claude"
 alias ccc="claude --continue"
 alias ccr="claude --resume"
+
+# --- macOS -------------------------------------
+
+alias uuid="uuidgen | pbcopy"
