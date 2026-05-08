@@ -74,3 +74,10 @@ export HERD_PHP_84_INI_SCAN_DIR="/Volumes/SSD/Users/michael/Library/Application 
 
 # OpenClaw Completion
 source "/Volumes/SSD/Users/michael/.openclaw/completions/openclaw.zsh"
+
+# bun completions
+[ -s "/Volumes/SSD/Users/michael/.bun/_bun" ] && source "/Volumes/SSD/Users/michael/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
