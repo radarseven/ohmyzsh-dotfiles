@@ -85,16 +85,27 @@ stow -R -t ~ git      # Just git config
 
 **Dealing with tools that auto-inject into `.zshrc`:**
 
-Since `~/.zshrc` is a symlink to the repo, tools that auto-modify it (like Herd, Kiro, etc.) will dirty your git state. When this happens:
+`.zshrc` is locked to read-only (chmod 444) to prevent tools from auto-injecting lines. This is managed automatically by git hooks in `.githooks/` and configured by `bootstrap.sh`.
+
+**If a tool install fails** complaining it can't modify `.zshrc`, that's the guard working. Check the tool's output for the lines it wanted to add and put them in `~/.mix-extra` instead.
+
+**If a tool somehow does write to it** (e.g., after you temporarily unlocked it), you'll see injected lines below the `END OF MANAGED CONFIG` comment. Move them to `~/.mix-extra` and restore:
 
 ```bash
 cd ~/.dotfiles
 git diff shell/.zshrc              # See what got injected
-# Move the injected lines to ~/.mix-extra
-code ~/.mix-extra
+code ~/.mix-extra                  # Move the lines there
 git checkout -- shell/.zshrc       # Restore the clean version
 source ~/.zshrc                    # Reload
 ```
+
+**How the guard works:**
+- `shell/.zshrc` is set to `444` (read-only) after every git operation
+- Git hooks in `.githooks/` handle this automatically:
+  - `pre-commit` → unlocks to 644 (so git can write)
+  - `post-commit`, `post-merge`, `post-checkout` → locks back to 444
+- `bootstrap.sh` configures the hooks and locks the file on new machines
+- If you need to edit `.zshrc` manually: `chmod 644 ~/.zshrc`, edit, commit, and the post-commit hook locks it back
 
 ## Syncing Another Machine
 
