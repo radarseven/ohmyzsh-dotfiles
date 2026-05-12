@@ -1,0 +1,4 @@
+#!/bin/sh
+# Unlock .zshrc so git can write during commit operations
+chmod 644 shell/.zshrc 2>/dev/null
+exit 0

@@ -82,6 +82,16 @@ for pkg in "${PACKAGES[@]}"; do
     stow -R -v -d "$DOTFILES_DIR" -t "$HOME" "$pkg"
 done
 
+# --- GIT HOOKS ---
+echo ""
+echo "🪝 Configuring git hooks..."
+git -C "$DOTFILES_DIR" config core.hooksPath .githooks
+echo "  ✓ .zshrc will be locked (444) after git operations"
+
+# Lock .zshrc to prevent tool auto-injection
+chmod 444 "$DOTFILES_DIR/shell/.zshrc" 2>/dev/null
+chmod 444 "$HOME/.zshrc" 2>/dev/null
+
 echo ""
 echo "✅ All dotfiles symlinked!"
 echo ""

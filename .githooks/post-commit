@@ -1,0 +1,5 @@
+#!/bin/sh
+# Lock .zshrc to prevent tools from auto-injecting
+chmod 444 shell/.zshrc 2>/dev/null
+chmod 444 ~/.zshrc 2>/dev/null
+exit 0
