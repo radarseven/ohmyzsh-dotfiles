@@ -11,10 +11,13 @@ Stow packages (symlinked to ~/):
 - `wget/` — wget config (.wgetrc)
 - `bin/` — Custom scripts (~/bin/)
 - `config/` — XDG config (~/.config/starship.toml)
+- `ssh/` — SSH config (.ssh/config, .ssh/config.d/)
 
 Non-stowed files at repo root:
-- `Brewfile` — Homebrew packages (`brew bundle` to install)
-- `bootstrap.sh` — Stow all packages to ~/
+- `Brewfile` + `Brewfile.<tag>` — Homebrew packages, shared base plus per-tag layers
+- `bootstrap.sh` — Prompt for the machine profile, stow all packages to ~/
+- `bundle.sh` — `brew bundle` the base Brewfile plus each tag's layer
+- `lib/profile.zsh` — Profile helpers shared by both scripts
 - `.osx` — macOS system defaults (run manually)
 
 ## Conventions
@@ -24,6 +27,18 @@ Non-stowed files at repo root:
 - Aliases go in `.mix-aliases`, PATH changes in `.mix-path`, env vars in `.mix-exports`
 - Stow a single package: `stow -R -d . -t ~ <package>`
 - Test changes: `source ~/.zshrc`
+
+## Machine profiles (role tags)
+
+Machines differ by composable tags, never by hostname: one of `laptop`/`desktop` plus one of `personal`/`work`. Each machine declares its tags in an untracked file, `~/.config/dotfiles/profile` (e.g. `laptop personal`), written by `bootstrap.sh`.
+
+Tag layers, all committed:
+- Homebrew: `Brewfile.<tag>`
+- Shell: `shell/.mix-tags.d/<tag>.zsh` (loaded by `.mix-tags`)
+- Git: `git/.gitconfig.d/<tag>` (wired up via generated `~/.config/dotfiles/gitconfig`; re-run `bootstrap.sh` after adding one)
+- SSH: `ssh/.ssh/config.d/<tag>` (gated by `Match exec` in `.ssh/config`)
+
+The shared base reaches work-managed machines. Personal stacks, emails, hosts, and deploy tooling go behind `personal`. The repo is public: secrets still go in `~/.mix-extra`, never in a tag layer.
 
 ## Handling tool auto-injection
 
@@ -42,7 +57,7 @@ Always prefer `.mix-extra` for machine-specific tooling. Keep the committed file
 ## Bootstrap
 
 ```bash
-./bootstrap.sh    # Symlink all packages to ~/
-brew bundle        # Install Homebrew packages
+./bootstrap.sh    # Set machine profile, symlink all packages to ~/
+./bundle.sh       # Install Homebrew packages for this profile
 source ~/.zshrc    # Reload shell
 ```

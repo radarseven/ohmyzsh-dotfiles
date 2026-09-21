@@ -10,19 +10,38 @@ Originally adapted from [Mathias Bynens' dotfiles](https://github.com/mathiasbyn
 
 | Package | Contents | Stowed to |
 |---------|----------|-----------|
-| `shell/` | .zshrc, .mix-aliases, .mix-exports, .mix-path | `~/` |
-| `git/` | .gitconfig, .global-gitignore | `~/` |
+| `shell/` | .zshrc, .mix-aliases, .mix-exports, .mix-path, .mix-tags, .mix-tags.d/ | `~/` |
+| `git/` | .gitconfig, .gitconfig.d/, .global-gitignore | `~/` |
 | `vim/` | .vimrc, .gvimrc, .vim/ | `~/` |
 | `wget/` | .wgetrc | `~/` |
 | `bin/` | Custom scripts | `~/bin/` |
 | `config/` | starship.toml, starship-ssh.toml | `~/.config/` |
-| `ssh/` | .ssh/config | `~/` |
+| `ssh/` | .ssh/config, .ssh/config.d/ | `~/` |
 | `fonts/` | figlet fonts (bigmoney-nw) | installed by bootstrap |
 
 Plus:
-- `Brewfile` — Homebrew packages (`brew bundle` to install)
-- `bootstrap.sh` — Symlinks everything to `~/` via Stow
+- `Brewfile`, `Brewfile.<tag>` — Homebrew packages: shared base plus per-tag layers (`./bundle.sh` to install)
+- `bootstrap.sh` — Sets the machine profile, symlinks everything to `~/` via Stow
 - `.osx` — macOS system defaults (run manually, review first)
+
+## Machine Profiles
+
+One repo, several machines. Each machine declares composable **role tags** — one of `laptop`/`desktop`, one of `personal`/`work` — in an untracked file that `bootstrap.sh` asks for once:
+
+```bash
+cat ~/.config/dotfiles/profile    # → laptop personal
+```
+
+Each tag layers on top of the shared base:
+
+| Layer | Base | Per tag |
+|-------|------|---------|
+| Homebrew | `Brewfile` | `Brewfile.<tag>` |
+| Shell | `.mix-*` | `~/.mix-tags.d/<tag>.zsh` |
+| Git | `.gitconfig` | `~/.gitconfig.d/<tag>` |
+| SSH | `.ssh/config` | `~/.ssh/config.d/<tag>` |
+
+The shared base is what a work-managed machine gets, so it carries no personal stack, email, or hosts — those sit behind `personal`. The base `.gitconfig` sets `user.useConfigOnly`, so a machine with no email configured refuses to commit rather than guessing. No hostnames anywhere: renaming a Mac changes nothing, and a new machine needs one local line and no repo edit.
 
 ## Modern CLI Tools
 
@@ -45,8 +64,8 @@ These dotfiles alias standard commands to modern replacements:
 ```bash
 git clone git@github.com:radarseven/ohmyzsh-dotfiles.git ~/.dotfiles
 cd ~/.dotfiles
-./bootstrap.sh     # Symlink everything to ~/
-brew bundle         # Install Homebrew packages
+./bootstrap.sh     # Set machine profile, symlink everything to ~/
+./bundle.sh        # Install Homebrew packages for this profile
 source ~/.zshrc     # Reload shell
 ```
 
@@ -147,7 +166,7 @@ Anything unique to that machine (tool hooks, work config, API keys) should go in
 **6. Reload and install tools**
 ```bash
 source ~/.zshrc
-brew bundle          # Install Homebrew packages
+./bundle.sh          # Install Homebrew packages for this profile
 ```
 
 **Your safety net**: backups are in `~/.dotfiles-backup/`. Check with `ls ~/.dotfiles-backup/`.

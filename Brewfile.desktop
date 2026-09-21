@@ -1,0 +1,5 @@
+# Brewfile.desktop — desktops only
+# Heavier tooling, VMs, media. Deliberately kept off the laptop.
+
+# --- Media ---
+brew "ffmpeg"

@@ -46,19 +46,21 @@ Apply the same tag layering to shell config, git config, and any machine-varying
 
 **The work MBP is the reason this matters.** Personal deploy credentials, AWS config, and product repos should never land on a company-managed machine by default. Keep them behind the `personal` tag and the boundary enforces itself.
 
-- [ ] Repo restructured for tag-based multi-machine config
-- [ ] `personal`-tagged content audited — nothing in the shared base that shouldn't reach a work machine
-- [ ] `brew bundle dump --force --describe` on the M1, diffed against the repo, and **pruned** — this is the highest-leverage half hour in the whole process
-- [ ] `brew leaves --installed-on-request` reviewed: what did you actually ask for, vs. what came along as a dependency
+- [x] Repo restructured for tag-based multi-machine config — `lib/profile.zsh`, `bundle.sh`, `Brewfile.<tag>`, `~/.mix-tags.d/`, `~/.gitconfig.d/`, `~/.ssh/config.d/`
+- [x] `personal`-tagged content audited — PHP/Laravel stack, personal git email, and personal SSH hosts moved out of the shared base
+- [ ] `brew bundle dump --force` on the M1, diffed against the repo, and **pruned** — this is the highest-leverage half hour in the whole process. Diff and proposed verdicts are in [m1-inventory.md](m1-inventory.md); the keep/prune calls are yours.
+- [ ] `brew leaves --installed-on-request` reviewed: what did you actually ask for, vs. what came along as a dependency (also in the inventory)
 - [ ] Pruned result committed
 
 ### Inventory what isn't in the repo
 
-- [ ] `composer global show` — global Composer packages
+Results for the checked items are in [m1-inventory.md](m1-inventory.md).
+
+- [x] `composer global show` — global Composer packages
 - [ ] Node/PHP versions per project — if these aren't already declared in a version manager config, commit that now
-- [ ] `npm ls -g --depth=0`
-- [ ] VS Code extensions (`code --list-extensions`) or enable Settings Sync
-- [ ] `~/Library/LaunchAgents` — list, audit, copy **selectively**. Prime cruft territory.
+- [x] `npm ls -g --depth=0` (and `volta list all` — that's where the globals actually live)
+- [x] VS Code extensions (`code --list-extensions`) or enable Settings Sync — saved to `setup/vscode-extensions.txt`
+- [x] `~/Library/LaunchAgents` — list, audit, copy **selectively**. Prime cruft territory. Verdict: copy none.
 - [ ] `~/Library/Fonts`
 - [ ] Terminal profiles, if not already in the repo
 - [ ] Screenshots of any System Settings panes you've meaningfully customized
@@ -118,11 +120,13 @@ Identical on both machines. The MBP run is where you find the rough edges.
 xcode-select --install
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-git clone <dotfiles-repo> ~/dotfiles
-cd ~/dotfiles && ./install.sh
+git clone <dotfiles-repo> ~/.dotfiles
+cd ~/.dotfiles
+./bootstrap.sh    # asks for the profile, stows packages, wires tag layers
+./bundle.sh       # Brewfile + Brewfile.<tag> for each tag
 ```
 
-Write `~/.config/dotfiles/profile` when prompted (`laptop personal` for the MBP, `desktop personal` for the Mini). The bootstrap should layer the right Brewfiles and configs from there. If it doesn't, fix it here and commit — this is exactly the class of gap the MBP run exists to catch.
+Answer the profile prompt — it writes `~/.config/dotfiles/profile` (`laptop personal` for the MBP, `desktop personal` for the Mini). The bootstrap should layer the right Brewfiles and configs from there. If it doesn't, fix it here and commit — this is exactly the class of gap the MBP run exists to catch.
 
 Rosetta 2 is only worth installing if you hit an actual Intel binary. Apple has signalled it's winding down, so treat anything requiring it as a prompt to find a replacement rather than a thing to accommodate.
 

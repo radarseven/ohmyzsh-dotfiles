@@ -1,12 +1,11 @@
 # Work Machine Setup Guide
 
-After running `./bootstrap.sh` and restoring the repo versions (`git checkout -- .`), follow these steps to configure machine-specific settings.
+After running `./bootstrap.sh` (answer **work** at the profile prompt) and restoring the repo versions (`git checkout -- .`), follow these steps to configure machine-specific settings.
 
 ## 1. Install Homebrew Packages + Modern CLI Tools
 
 ```bash
-brew bundle                    # From ~/.dotfiles
-brew install --cask font-monaspace-nf   # Terminal font
+./bundle.sh                    # From ~/.dotfiles — base Brewfile + Brewfile.work (includes the Nerd Font)
 ```
 
 Set your terminal font to **Monaspace Neon NF** (or MesloLGS NF).
@@ -44,7 +43,7 @@ EXTRA
 
 ## 3. Set Work Git Email
 
-The repo's `.gitconfig` includes `~/.gitconfig.local` (which git silently ignores if missing). Create it on this machine to override your email globally:
+The repo's `.gitconfig` includes `~/.gitconfig.local` (which git silently ignores if missing). Create it on this machine to set your email globally (the shared base deliberately has none, and git will refuse to commit until you do):
 
 ```bash
 cat > ~/.gitconfig.local << 'EOF'
@@ -63,7 +62,8 @@ source ~/.zshrc
 
 ## Checklist
 
-- [ ] `brew bundle` completed
+- [ ] `~/.config/dotfiles/profile` contains `work`
+- [ ] `./bundle.sh` completed
 - [ ] Nerd Font installed and set in terminal(s)
 - [ ] `~/.mix-extra` created with work-specific config
 - [ ] Git work email configured (includeIf or global override)
