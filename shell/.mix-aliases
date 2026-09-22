@@ -119,6 +119,9 @@ alias ...="cd ../.."
 alias ~="cd ~"
 alias -- -="cd -"
 
+# Sites
+alias sites="cd ~/Sites"
+
 # cd into whatever is the forefront Finder window
 cdf() {
   cd "`osascript -e 'tell app "Finder" to POSIX path of (insertion location as alias)'`"
