@@ -19,6 +19,19 @@ mkdir -p "$HOME/.config"
 # instead of folding the whole directory into the repo
 mkdir -p "$HOME/.ssh" && chmod 700 "$HOME/.ssh"
 
+# A real (non-symlink) ~/.ssh/config is this machine's own hosts. Move it to
+# the untracked ~/.ssh/config.local — which the stowed config includes —
+# rather than letting stow --adopt overwrite the repo's copy with it.
+if [[ -f "$HOME/.ssh/config" && ! -L "$HOME/.ssh/config" ]]; then
+    if [[ -e "$HOME/.ssh/config.local" ]]; then
+        echo "✗ ~/.ssh/config is a real file but ~/.ssh/config.local already exists." >&2
+        echo "  Merge them by hand, then re-run." >&2
+        exit 1
+    fi
+    mv "$HOME/.ssh/config" "$HOME/.ssh/config.local"
+    echo "🔐 Moved existing ~/.ssh/config → ~/.ssh/config.local (untracked, still loaded)"
+fi
+
 # --- MACHINE PROFILE ---
 # Role tags (e.g. "laptop personal") decide which Brewfile.<tag>, shell,
 # git, and ssh layers apply here. Untracked; asked once per machine.

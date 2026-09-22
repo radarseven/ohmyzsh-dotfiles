@@ -54,7 +54,11 @@ EOF
 
 This file is never committed. All repos on this machine will use your work email.
 
-## 4. Reload
+## 4. Work SSH hosts
+
+If this machine had its own `~/.ssh/config`, bootstrap moved it to `~/.ssh/config.local`. It is still loaded — nothing to do. Add new work hosts there, not in the repo.
+
+## 5. Reload
 
 ```bash
 source ~/.zshrc

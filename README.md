@@ -255,6 +255,8 @@ For the full story of the modernization — what changed, why, and all the gory 
 
 SSH config is managed via stow from `ssh/.ssh/config`. Keys are managed via **1Password SSH Agent** — never stored on disk.
 
+Hosts that shouldn't be in a public repo go in `~/.ssh/config.local`, which the stowed config includes and git never sees. If a machine already has a real `~/.ssh/config` when you first run `bootstrap.sh`, it is moved there automatically.
+
 ### New Machine Setup
 
 1. Install 1Password + enable SSH agent: **Settings → Developer → Use the SSH agent**

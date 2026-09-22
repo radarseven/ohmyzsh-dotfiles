@@ -38,7 +38,7 @@ Tag layers, all committed:
 - Git: `git/.gitconfig.d/<tag>` (wired up via generated `~/.config/dotfiles/gitconfig`; re-run `bootstrap.sh` after adding one)
 - SSH: `ssh/.ssh/config.d/<tag>` (gated by `Match exec` in `.ssh/config`)
 
-The shared base reaches work-managed machines. Personal stacks, emails, hosts, and deploy tooling go behind `personal`. The repo is public: secrets still go in `~/.mix-extra`, never in a tag layer.
+The shared base reaches work-managed machines. Personal stacks, emails, hosts, and deploy tooling go behind `personal`. The repo is public: secrets still go in `~/.mix-extra`, never in a tag layer. Untracked per-machine files: `~/.mix-extra`, `~/.gitconfig.local`, `~/.ssh/config.local`.
 
 ## Handling tool auto-injection
 
