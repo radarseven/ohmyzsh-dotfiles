@@ -1,8 +1,8 @@
-# Dotfiles Brewfile
-# Install with: brew bundle
-
-# --- Taps ---
-tap "homebrew/bundle"
+# Dotfiles Brewfile — shared base: everything, everywhere
+# Install with: ./bundle.sh  (layers Brewfile.<tag> per ~/.config/dotfiles/profile)
+#
+# Anything here lands on work-managed machines too. Personal stacks,
+# deploy tooling, and licensed apps belong in Brewfile.personal.
 
 # --- CLI Essentials ---
 brew "coreutils"
@@ -28,16 +28,10 @@ brew "git-delta"    # git diff viewer
 brew "zoxide"       # smart cd
 
 # --- Development ---
-brew "node"
-brew "yarn"
-brew "php"
-brew "composer"
+# Node lives in Volta, not Homebrew — see the runbook
 brew "rbenv"
 brew "ruby-build"
-brew "mysql"
-brew "redis"
 brew "sqlite"
-brew "nginx"
 
 # --- Utilities ---
 brew "stow"         # dotfiles symlink manager
@@ -45,6 +39,14 @@ brew "jq"           # JSON processor
 brew "htop"         # better top
 brew "rename"       # file renaming
 brew "pv"           # pipe viewer
+brew "tldr"         # community man pages
+brew "trash"        # rm to the Trash instead
+brew "tmux"
+brew "moreutils"    # sponge, ts, vipe, …
+brew "p7zip"
+brew "ast-grep"     # structural code search
+brew "uv"           # python tooling
+brew "figlet"       # banner text (bootstrap installs fonts/ for it)
 
 # --- ZSH ---
 brew "zsh"
@@ -53,9 +55,8 @@ brew "zsh-syntax-highlighting"
 
 # --- Prompt ---
 brew "starship"
+cask "font-monaspace-nf"    # Nerd Font for starship icons
 
-# --- Image / Media ---
-brew "ffmpeg"
+# --- Image ---
 brew "imagemagick"
-brew "optipng"
 brew "webp"

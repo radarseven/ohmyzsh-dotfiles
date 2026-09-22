@@ -1,0 +1,13 @@
+# Brewfile.personal — personally-owned machines only
+# Product stacks, deploy tooling, personal licenses. Never reaches a work machine.
+
+# --- PHP / Laravel stack ---
+brew "php"
+brew "composer"
+brew "mysql"
+brew "nginx"
+
+# --- Apps ---
+cask "1password-cli"
+cask "raycast"
+cask "tailscale-app"

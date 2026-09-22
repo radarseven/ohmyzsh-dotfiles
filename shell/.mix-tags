@@ -1,0 +1,14 @@
+# --- ROLE TAGS ------------------------------------
+# Layers machine-varying config by this machine's role tags.
+# Tags live in an untracked local file written by bootstrap.sh:
+#   ~/.config/dotfiles/profile   →  e.g. "laptop personal"
+
+DOTFILES_TAGS=()
+if [ -r "${XDG_CONFIG_HOME:-$HOME/.config}/dotfiles/profile" ]; then
+	DOTFILES_TAGS=(${=$(<"${XDG_CONFIG_HOME:-$HOME/.config}/dotfiles/profile")})
+fi
+
+for tag in $DOTFILES_TAGS; do
+	[ -r ~/.mix-tags.d/$tag.zsh ] && source ~/.mix-tags.d/$tag.zsh
+done
+unset tag

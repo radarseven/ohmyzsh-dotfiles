@@ -15,7 +15,8 @@ ZSH=$HOME/.oh-my-zsh
 ZSH_THEME=""
 
 # Load path and environment config (before oh-my-zsh)
-for file in ~/.mix-{path,exports,aliases}; do
+# .mix-tags layers ~/.mix-tags.d/<tag>.zsh per ~/.config/dotfiles/profile
+for file in ~/.mix-{path,exports,aliases,tags}; do
 	[ -r "$file" ] && source "$file"
 done
 unset file
