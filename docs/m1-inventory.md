@@ -6,21 +6,18 @@ Snapshot taken 2026-09-21 for the [clean install runbook](mac-clean-install-runb
 
 Sources: `brew bundle dump`, `brew leaves --installed-on-request`, and the Cellar install receipts (`installed_on_request`). The receipts list is the widest — it includes things requested once that other formulae now also depend on — so it is the one sorted below. Everything under "build deps" is absent from `brew leaves`, which confirms that verdict.
 
-~100 formulae were explicitly installed that the Brewfiles don't carry. Sorted into a proposed verdict — **nothing from this list has been added except `figlet`**. Promote by editing the right `Brewfile.<tag>`; everything else is pruned by omission.
+~100 formulae were explicitly installed that the Brewfiles didn't carry. Verdicts applied 2026-09-21:
 
-**Worth keeping (candidates)**
+**Kept**
 
-| Formula | Suggested layer |
+| Formula | Layer |
 |---|---|
-| `figlet` | base — added (bootstrap installs fonts for it) |
-| `tldr`, `trash`, `tmux`, `moreutils`, `p7zip`, `xz`, `pigz`, `ssh-copy-id`, `ast-grep`, `uv` | base |
-| `gnupg`, `pinentry` | base, only if you start signing commits (no secret keys exist today) |
-| `sass`, `woff2`, `sfnt2woff`, `sfnt2woff-zopfli`, `zopfli`, `pngcheck`, `folderify` | personal (web/font tooling; two need third-party taps) |
-| `openai-whisper`, `ghostscript`, `xpdf` | desktop |
-| `go`, `lua`, `himalaya`, `rtk`, `certbot`, `dnsmasq`, `mysql-client`, `libpq` | decide per tool — install on demand |
+| `figlet`, `tldr`, `trash`, `tmux`, `moreutils`, `p7zip`, `ast-grep`, `uv` | base |
+| `openai-whisper` | desktop |
 
-**Probably prune**
+**Pruned** (by omission — reinstall on demand if missed)
 
+- Considered and passed on: `gnupg`/`pinentry` (no signing keys today), `sass`, `woff2`, `sfnt2woff*`, `zopfli`, `pngcheck`, `folderify`, `ghostscript`, `xpdf`, `go`, `lua`, `himalaya`, `rtk`, `certbot`, `dnsmasq`, `mysql-client`, `libpq`, `xz`, `pigz`, `ssh-copy-id`
 - Security/CTF tooling: `hydra`, `john`, `sqlmap`, `nmap`, `hashpump`, `fcrackzip`, `foremost`, `knock`, `dns2tcp`, `tcpflow`, `socat`, `cifer`, `dex2jar`, `vbindiff`, `binutils`
 - EOL runtimes: `php@7.3`, `php@7.4`, `node@14`, `python@3.9`, `python@3.10`, `mysql@8.4` (duplicate of `mysql`)
 - Apache: `httpd` (nginx/Herd/Valet cover this)
@@ -29,11 +26,11 @@ Sources: `brew bundle dump`, `brew leaves --installed-on-request`, and the Cella
 
 **In the repo but never explicitly installed here** (arrived as dependencies): `curl`, `gnu-tar`, `imagemagick`, `openssl`, `php`, `webp`. Harmless; kept.
 
-**In the repo but not installed on the M1 at all:** `wget`, `optipng`, `redis`. You have gone without them here, which makes them prune candidates — though `wget` has its own stow package (`.wgetrc`), so either keep both or drop both.
+**Were in the repo but not installed on the M1:** `optipng` and `redis` — removed. `wget` kept (it has its own stow package).
 
 **Staleness:** 173 installed formulae are outdated, so `./bundle.sh check` fails on this machine for version reasons, not missing packages. Irrelevant to the new builds; `brew upgrade` if you want a clean check here.
 
-**Open question — `node` and `yarn` in the base Brewfile.** Volta manages Node on this machine and wins on `PATH`. The Homebrew copies are redundant; dropping them (and adding Volta's installer to the runbook) would remove a source of "which node is this" confusion.
+**`node` and `yarn` removed from the base Brewfile.** Volta manages Node and wins on `PATH`; the Homebrew copies were redundant. The runbook now installs Volta in the Foundation step.
 
 ### Casks
 

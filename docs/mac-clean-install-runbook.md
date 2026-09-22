@@ -48,9 +48,9 @@ Apply the same tag layering to shell config, git config, and any machine-varying
 
 - [x] Repo restructured for tag-based multi-machine config — `lib/profile.zsh`, `bundle.sh`, `Brewfile.<tag>`, `~/.mix-tags.d/`, `~/.gitconfig.d/`, `~/.ssh/config.d/`
 - [x] `personal`-tagged content audited — PHP/Laravel stack, personal git email, and personal SSH hosts moved out of the shared base
-- [ ] `brew bundle dump --force` on the M1, diffed against the repo, and **pruned** — this is the highest-leverage half hour in the whole process. Diff and proposed verdicts are in [m1-inventory.md](m1-inventory.md); the keep/prune calls are yours.
-- [ ] `brew leaves --installed-on-request` reviewed: what did you actually ask for, vs. what came along as a dependency (also in the inventory)
-- [ ] Pruned result committed
+- [x] `brew bundle dump --force` on the M1, diffed against the repo, and **pruned** — this is the highest-leverage half hour in the whole process. Diff and verdicts are in [m1-inventory.md](m1-inventory.md).
+- [x] `brew leaves --installed-on-request` reviewed: what did you actually ask for, vs. what came along as a dependency (also in the inventory)
+- [x] Pruned result committed
 
 ### Inventory what isn't in the repo
 
@@ -124,6 +124,10 @@ git clone <dotfiles-repo> ~/.dotfiles
 cd ~/.dotfiles
 ./bootstrap.sh    # asks for the profile, stows packages, wires tag layers
 ./bundle.sh       # Brewfile + Brewfile.<tag> for each tag
+
+# Node is managed by Volta, not Homebrew
+curl https://get.volta.sh | bash
+volta install node@22 yarn@1
 ```
 
 Answer the profile prompt — it writes `~/.config/dotfiles/profile` (`laptop personal` for the MBP, `desktop personal` for the Mini). The bootstrap should layer the right Brewfiles and configs from there. If it doesn't, fix it here and commit — this is exactly the class of gap the MBP run exists to catch.
@@ -134,7 +138,7 @@ Rosetta 2 is only worth installing if you hit an actual Intel binary. Apple has 
 
 - [ ] PHP toolchain and per-project versions
 - [ ] Composer + global packages
-- [ ] Node version manager + required versions
+- [ ] Node version manager + required versions (Volta — installed in Foundation; `volta install` the globals from the inventory)
 - [ ] Local dev server / site directories re-registered
 - [ ] Trusted local TLS certs regenerated
 - [ ] Claude Code installed and authenticated; `~/.claude` config, MCP server definitions, and per-project `CLAUDE.md` files in place (these belong in the dotfiles repo if they aren't already)

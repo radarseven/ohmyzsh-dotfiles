@@ -28,8 +28,7 @@ brew "git-delta"    # git diff viewer
 brew "zoxide"       # smart cd
 
 # --- Development ---
-brew "node"
-brew "yarn"
+# Node lives in Volta, not Homebrew — see the runbook
 brew "rbenv"
 brew "ruby-build"
 brew "sqlite"
@@ -40,6 +39,13 @@ brew "jq"           # JSON processor
 brew "htop"         # better top
 brew "rename"       # file renaming
 brew "pv"           # pipe viewer
+brew "tldr"         # community man pages
+brew "trash"        # rm to the Trash instead
+brew "tmux"
+brew "moreutils"    # sponge, ts, vipe, …
+brew "p7zip"
+brew "ast-grep"     # structural code search
+brew "uv"           # python tooling
 brew "figlet"       # banner text (bootstrap installs fonts/ for it)
 
 # --- ZSH ---
@@ -53,5 +59,4 @@ cask "font-monaspace-nf"    # Nerd Font for starship icons
 
 # --- Image ---
 brew "imagemagick"
-brew "optipng"
 brew "webp"
