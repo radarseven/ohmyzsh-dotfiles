@@ -56,7 +56,7 @@ Carried forward: `font-monaspace-nf` (base); `1password-cli`, `raycast`, `tailsc
 
 **`~/Library/LaunchAgents`** (14): Setapp ×4, iStat Menus ×2, Adobe ×2, Dropbox updater, iMazing Mini, MailSteward schedule, CodeWhisperer launcher, OpenClaw gateway, Homebrew dnsmasq. All are recreated by their apps on install — **copy none**. The two to consciously re-set-up if still wanted: the dnsmasq service and the MailSteward schedule.
 
-**`~/Library/Fonts`:** 443 files. Too many to carry blind — copy the families you actually use, or sync via a font manager.
+**`~/Library/Fonts`:** 443 files, but 420 are Monaspace from the Homebrew casks. Free families (Meslo NF, JetBrains Mono, Roboto) are now in the base Brewfile. Only the paid ones need transferring — Operator Mono and Dank Mono — via 1Password with their licence details.
 
 ## Secrets & signing (facts only)
 

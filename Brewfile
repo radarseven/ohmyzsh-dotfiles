@@ -55,7 +55,13 @@ brew "zsh-syntax-highlighting"
 
 # --- Prompt ---
 brew "starship"
-cask "font-monaspace-nf"    # Nerd Font for starship icons
+
+# --- Fonts ---
+# Paid families (Operator Mono, Dank Mono) are in 1Password, not here
+cask "font-monaspace-nf"        # Nerd Font for starship icons
+cask "font-meslo-lg-nerd-font"
+cask "font-jetbrains-mono"
+cask "font-roboto"
 
 # --- Image ---
 brew "imagemagick"
