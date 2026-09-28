@@ -9,15 +9,6 @@ alias oo='open .'
 # Add a spacer to the dock
 alias spacedock="defaults write com.apple.dock persistent-apps -array-add '{"tile-type"="spacer-tile";}'; killall Dock"
 
-# Vagrant
-alias vup="vagrant up"
-alias vsus="vagrant suspend"
-alias vhalt="vagrant halt"
-alias vkill="vagrant destroy"
-
-# Homestead
-alias hsconf="code ~/Homestead/Homestead.yaml"
-
 
 # ---- SYSTEM & NETWORK ----------------
 
@@ -180,11 +171,6 @@ function bundleId() {
 # Find what's using a port
 function port() {
   sudo lsof -i -P | grep LISTEN | grep :$1
-}
-
-# Homestead wrapper for Vagrant
-function homestead() {
-    ( cd ~/Homestead && vagrant $* )
 }
 
 
