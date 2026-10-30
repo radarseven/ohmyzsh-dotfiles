@@ -9,3 +9,6 @@ if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 # NPM global packages
 # https://docs.npmjs.com/getting-started/fixing-npm-permissions
 export PATH=~/.npm-global/bin:$PATH
+
+# User-local binaries: Claude Code native install, uv tool shims, pipx, …
+export PATH="$HOME/.local/bin:$PATH"
