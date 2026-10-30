@@ -1,7 +1,3 @@
-
-# Kiro CLI pre block. Keep at the top of this file.
-[[ -f "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.pre.zsh" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.pre.zsh"
-
 # Add `~/bin` to the `$PATH`
 export PATH="$HOME/bin:$PATH"
 
@@ -69,11 +65,3 @@ eval "$(starship init zsh)"
 # Anything below this line was auto-injected by a tool and should be
 # moved to ~/.mix-extra, then restore this file with:
 #   git checkout -- shell/.zshrc
-
-
-# Kiro CLI post block. Keep at the bottom of this file.
-[[ -f "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.post.zsh"
-
-
-# Herd injected PHP 8.4 configuration.
-export HERD_PHP_84_INI_SCAN_DIR="/Users/michael/Library/Application Support/Herd/config/php/84"
