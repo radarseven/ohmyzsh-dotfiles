@@ -58,7 +58,11 @@ brew "starship"
 
 # --- Fonts ---
 # Paid families (Operator Mono, Dank Mono) are in 1Password, not here
-cask "font-monaspace-nf"        # Nerd Font for starship icons
+# Monaspace ships as two casks with different family names: "Monaspace Neon"
+# (plain, for editors) and "Monaspace Neon NF" (Nerd Font glyphs, for the
+# terminal). Both cover all five families — Argon, Krypton, Neon, Radon, Xenon.
+cask "font-monaspace"           # GitHub Monaspace — editor font
+cask "font-monaspace-nf"        # Nerd Font build for starship icons
 cask "font-meslo-lg-nerd-font"
 cask "font-jetbrains-mono"
 cask "font-roboto"
