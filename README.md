@@ -253,19 +253,23 @@ For the full story of the modernization — what changed, why, and all the gory 
 
 ## SSH Config
 
-SSH config is managed via stow from `ssh/.ssh/config`. Keys are managed via **1Password SSH Agent** — never stored on disk.
+SSH config is managed via stow from `ssh/.ssh/config`. Keys are managed via **1Password SSH Agent** — never stored on disk. Each machine gets its own key item in the vault (per-machine revocation, clear attribution). Only the public half lives on disk, at `~/.ssh/id_ed25519.pub`, so the shared git config can sign commits with it.
+
+The agent is only assumed on machines tagged `personal`. Other machines use the default agent; one that also has 1Password can set `IdentityAgent` in `~/.ssh/config.local`.
 
 Hosts that shouldn't be in a public repo go in `~/.ssh/config.local`, which the stowed config includes and git never sees. If a machine already has a real `~/.ssh/config` when you first run `bootstrap.sh`, it is moved there automatically.
 
 ### New Machine Setup
 
 1. Install 1Password + enable SSH agent: **Settings → Developer → Use the SSH agent**
-2. Make sure your keys are in 1Password (check the **The Reiners** vault)
-3. Add **The Reiners** vault to `~/.config/1Password/ssh/agent.toml`:
+2. Make sure your keys are in 1Password (the **Private** vault of the family account)
+3. Create `~/.config/1Password/ssh/agent.toml`. The agent only serves the vaults listed here, and with a work account also signed in, the account must be pinned or the agent serves nothing:
    ```toml
    [[ssh-keys]]
-   vault = "The Reiners"
+   vault = "Private"
+   account = "reiners.1password.com"
    ```
+   1Password watches this file; no restart needed. Check with `ssh-add -l`.
 4. Add this to `~/.mix-extra` (not committed — do this manually on each machine):
    ```bash
    # 1Password SSH Agent
@@ -273,12 +277,16 @@ Hosts that shouldn't be in a public repo go in `~/.ssh/config.local`, which the 
    ```
 5. Reload: `source ~/.zshrc`
 6. Verify: `ssh-add -l` — should list your keys
+7. Create this machine's key in 1Password (**New Item → SSH Key**, named after the machine), then save its public key to `~/.ssh/id_ed25519.pub`
+8. Add the public key to GitHub twice: once as an **Authentication** key, once as a **Signing** key
+9. Verify: `ssh -T git@github.com`, then make a commit and check `git log --show-signature`
 
-### Keys in 1Password (The Reiners vault)
+### Keys in 1Password (family account, Private vault)
 
 | Key | Used for |
 |-----|----------|
-| `MilleniumFalcon - id_ed25519` | General SSH, GitHub, Home Assistant |
+| `<machine> - id_ed25519` | One per machine (e.g. `DeLorean (M6 Mac Mini) - id_ed25519`): general SSH, GitHub auth + commit signing |
+| `MilleniumFalcon - id_ed25519` | The original shared key (M1) — retire once each machine has its own |
 | `WP Engine Git Key` | WP Engine git push (legacy, may be inactive) |
 
 ## Starship Prompt

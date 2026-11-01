@@ -1,2 +1,6 @@
 [user]
 	email = mreiner77@gmail.com
+
+# Commit signing goes through the 1Password SSH agent on personal machines.
+[gpg "ssh"]
+	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
