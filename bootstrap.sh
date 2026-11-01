@@ -82,6 +82,30 @@ fi
 
 echo "  Backup complete."
 
+# --- OH-MY-ZSH ---
+# .zshrc sources ~/.oh-my-zsh/oh-my-zsh.sh, so a fresh machine needs it before
+# the shell will load. --keep-zshrc stops the installer replacing the stowed file.
+echo ""
+echo "🐚 Checking Oh-My-Zsh..."
+ZSH_DIR="${ZSH:-$HOME/.oh-my-zsh}"
+if [[ -d "$ZSH_DIR" ]]; then
+    echo "  ✓ Oh-My-Zsh already installed"
+else
+    echo "  Installing Oh-My-Zsh..."
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended --keep-zshrc
+    echo "  ✓ Oh-My-Zsh installed"
+fi
+
+# Custom plugins listed in .zshrc that don't ship with Oh-My-Zsh
+ZSH_CUSTOM_DIR="${ZSH_CUSTOM:-$ZSH_DIR/custom}"
+if [[ -d "$ZSH_CUSTOM_DIR/plugins/zsh-autosuggestions" ]]; then
+    echo "  ✓ zsh-autosuggestions already installed"
+else
+    echo "  Installing zsh-autosuggestions plugin..."
+    git clone --depth 1 https://github.com/zsh-users/zsh-autosuggestions "$ZSH_CUSTOM_DIR/plugins/zsh-autosuggestions"
+    echo "  ✓ zsh-autosuggestions installed"
+fi
+
 # --- FIGLET FONTS ---
 echo ""
 echo "🔤 Installing figlet fonts..."

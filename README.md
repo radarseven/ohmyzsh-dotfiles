@@ -72,7 +72,7 @@ source ~/.zshrc     # Reload shell
 ### Prerequisites
 
 - macOS with [Homebrew](https://brew.sh/) installed
-- [Oh-My-Zsh](https://ohmyz.sh/) installed
+- `bootstrap.sh` installs [Oh-My-Zsh](https://ohmyz.sh/) and the `zsh-autosuggestions` plugin if they are missing
 - A [Nerd Font](https://www.nerdfonts.com/) for terminal icons (e.g., MesloLGS NF)
 
 ### Stow a Single Package
