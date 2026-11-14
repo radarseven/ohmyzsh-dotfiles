@@ -288,7 +288,7 @@ Hosts that shouldn't be in a public repo go in `~/.ssh/config.local`, which the 
 
 | Key | Used for |
 |-----|----------|
-| `<machine> - id_ed25519` | One per machine (e.g. `DeLorean (M6 Mac Mini) - id_ed25519`): general SSH, GitHub auth + commit signing |
+| `<machine> - id_ed25519` | One per machine, named after its hostname: `DeLorean (14" M5 Pro MBP)`, `MacGyver (M6 Mac Mini) - id_ed25519`. General SSH, GitHub auth + commit signing |
 | `MilleniumFalcon - id_ed25519` | The original shared key (M1) — retire once each machine has its own |
 | `WP Engine Git Key` | WP Engine git push (legacy, may be inactive) |
 
