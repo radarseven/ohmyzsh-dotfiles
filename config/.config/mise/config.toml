@@ -1,0 +1,14 @@
+# Global mise config — Node only. PHP stays with Herd.
+# Portable across machines: per-machine overrides go in the untracked
+# ~/.config/mise/config.local.toml, which mise reads automatically.
+
+[tools]
+node = "24"    # global default; projects pin their own via .node-version/.nvmrc
+
+[settings]
+# Honor project .node-version / .nvmrc files (node only, so .php-version is ignored)
+idiomatic_version_file_enable_tools = ["node"]
+
+[settings.node]
+# Run `corepack enable` after each Node install, so yarn/pnpm follow packageManager
+corepack = true

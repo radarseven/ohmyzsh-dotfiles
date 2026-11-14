@@ -123,11 +123,7 @@ xcode-select --install
 git clone <dotfiles-repo> ~/.dotfiles
 cd ~/.dotfiles
 ./bootstrap.sh    # asks for the profile, stows packages, wires tag layers
-./bundle.sh       # Brewfile + Brewfile.<tag> for each tag
-
-# Node is managed by Volta, not Homebrew
-curl https://get.volta.sh | bash
-volta install node@22 yarn@1
+./bundle.sh       # Brewfile + Brewfile.<tag> for each tag, then `mise install` for Node
 ```
 
 Answer the profile prompt — it writes `~/.config/dotfiles/profile` (`laptop personal` for the MBP, `desktop personal` for the Mini). The bootstrap should layer the right Brewfiles and configs from there. If it doesn't, fix it here and commit — this is exactly the class of gap the MBP run exists to catch.
@@ -138,7 +134,7 @@ Rosetta 2 is only worth installing if you hit an actual Intel binary. Apple has 
 
 - [ ] PHP toolchain and per-project versions
 - [ ] Composer + global packages
-- [ ] Node version manager + required versions (Volta — installed in Foundation; `volta install` the globals from the inventory)
+- [ ] Node version manager + required versions (mise — installed by `./bundle.sh` in Foundation; projects pin versions via `.node-version`, yarn comes from corepack)
 - [ ] Local dev server / site directories re-registered
 - [ ] Trusted local TLS certs regenerated
 - [ ] Claude Code installed and authenticated; `~/.claude` config, MCP server definitions, and per-project `CLAUDE.md` files in place (these belong in the dotfiles repo if they aren't already)

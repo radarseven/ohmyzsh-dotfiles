@@ -15,7 +15,7 @@ Originally adapted from [Mathias Bynens' dotfiles](https://github.com/mathiasbyn
 | `vim/` | .vimrc, .gvimrc, .vim/ | `~/` |
 | `wget/` | .wgetrc | `~/` |
 | `bin/` | Custom scripts | `~/bin/` |
-| `config/` | starship.toml, starship-ssh.toml | `~/.config/` |
+| `config/` | starship.toml, starship-ssh.toml, mise/config.toml | `~/.config/` |
 | `ssh/` | .ssh/config, .ssh/config.d/ | `~/` |
 | `fonts/` | figlet fonts (bigmoney-nw) | installed by bootstrap |
 

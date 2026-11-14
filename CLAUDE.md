@@ -10,13 +10,13 @@ Stow packages (symlinked to ~/):
 - `vim/` — Vim config (.vimrc, .gvimrc, .vim/)
 - `wget/` — wget config (.wgetrc)
 - `bin/` — Custom scripts (~/bin/)
-- `config/` — XDG config (~/.config/starship.toml)
+- `config/` — XDG config (~/.config/starship.toml, ~/.config/mise/config.toml)
 - `ssh/` — SSH config (.ssh/config, .ssh/config.d/)
 
 Non-stowed files at repo root:
 - `Brewfile` + `Brewfile.<tag>` — Homebrew packages, shared base plus per-tag layers
 - `bootstrap.sh` — Prompt for the machine profile, stow all packages to ~/
-- `bundle.sh` — `brew bundle` the base Brewfile plus each tag's layer
+- `bundle.sh` — `brew bundle` the base Brewfile plus each tag's layer, then `mise install`
 - `lib/profile.zsh` — Profile helpers shared by both scripts
 - `.osx` — macOS system defaults (run manually)
 
@@ -38,13 +38,17 @@ Tag layers, all committed:
 - Git: `git/.gitconfig.d/<tag>` (wired up via generated `~/.config/dotfiles/gitconfig`; re-run `bootstrap.sh` after adding one)
 - SSH: `ssh/.ssh/config.d/<tag>` (gated by `Match exec` in `.ssh/config`)
 
-The shared base reaches work-managed machines. Personal stacks, emails, hosts, and deploy tooling go behind `personal`. The repo is public: secrets still go in `~/.mix-extra`, never in a tag layer. Untracked per-machine files: `~/.mix-extra`, `~/.gitconfig.local`, `~/.ssh/config.local`.
+The shared base reaches work-managed machines. Personal stacks, emails, hosts, and deploy tooling go behind `personal`. The repo is public: secrets still go in `~/.mix-extra`, never in a tag layer. Untracked per-machine files: `~/.mix-extra`, `~/.gitconfig.local`, `~/.ssh/config.local`, `~/.config/mise/config.local.toml`.
 
 ## Handling tool auto-injection
 
 `~/.zshrc` is not stowed. It is an untracked one-line stub, written by `bootstrap.sh`, that sources `shell/.zshrc`. Tools that append to `~/.zshrc` on every launch (Herd does this with its PHP ini exports) write to the stub, so the repo file never goes dirty. Leave the stub alone; `git status` staying clean is the whole point.
 
 If `shell/.zshrc` ever does show injected lines (e.g. a tool followed the source line), move them to `~/.mix-extra` and `git checkout -- shell/.zshrc`. Machine-specific tooling always belongs in `~/.mix-extra`; keep the committed files portable and clean.
+
+## Node
+
+mise manages Node (and only Node — PHP stays with Herd). `shell/.zshrc` activates it; the global default and settings live in `config/.config/mise/config.toml`. Projects pin versions with `.node-version`/`.nvmrc`; yarn/pnpm come from corepack. Never load Herd's bundled nvm.
 
 ## Branches
 
@@ -55,6 +59,6 @@ If `shell/.zshrc` ever does show injected lines (e.g. a tool followed the source
 
 ```bash
 ./bootstrap.sh    # Set machine profile, symlink all packages to ~/
-./bundle.sh       # Install Homebrew packages for this profile
+./bundle.sh       # Install Homebrew packages for this profile, then Node via mise
 source ~/.zshrc    # Reload shell
 ```

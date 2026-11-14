@@ -28,7 +28,8 @@ brew "git-delta"    # git diff viewer
 brew "zoxide"       # smart cd
 
 # --- Development ---
-# Node lives in Volta, not Homebrew — see the runbook
+# Node lives in mise, not Homebrew — config in config/.config/mise/
+brew "mise"         # Node version manager
 brew "rbenv"
 brew "ruby-build"
 brew "sqlite"

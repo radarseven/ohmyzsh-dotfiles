@@ -22,4 +22,12 @@ for layer in "" "${TAGS[@]}"; do
     brew bundle "${@:-install}" --file="$f" || failed=1
 done
 
+# Node comes from mise, not Homebrew: install whatever ~/.config/mise/config.toml
+# asks for. Only on an install run — check/cleanup stay Homebrew-only.
+if [[ "${1:-install}" == install ]] && command -v mise &> /dev/null; then
+    echo ""
+    echo "  → mise install"
+    mise install || failed=1
+fi
+
 exit ${failed:-0}
