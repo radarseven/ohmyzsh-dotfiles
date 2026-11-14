@@ -15,6 +15,10 @@ fi
 # Ensure ~/.config exists (for starship.toml)
 mkdir -p "$HOME/.config"
 
+# Ensure ~/.config/mise exists as a real directory, so stow links only
+# config.toml and the untracked config.local.toml never lands in the repo
+mkdir -p "$HOME/.config/mise"
+
 # Ensure ~/.ssh exists as a real directory, so stow links the files inside it
 # instead of folding the whole directory into the repo
 mkdir -p "$HOME/.ssh" && chmod 700 "$HOME/.ssh"
@@ -51,6 +55,7 @@ FILES_TO_BACKUP=(
     .vimrc .gvimrc
     .wgetrc
     .config/starship.toml
+    .config/mise/config.toml
     .p10k.zsh
 )
 
@@ -185,7 +190,7 @@ echo "  cd ~/.dotfiles && stow -D -t ~ shell git vim wget bin config ssh"
 echo "  cp -a $BACKUP_DIR/. ~/"
 echo ""
 echo "Next steps:"
-echo "  ./bundle.sh          # Install Homebrew packages for this profile"
+echo "  ./bundle.sh          # Install Homebrew packages for this profile, then Node via mise"
 echo "  source ~/.zshrc      # Reload shell config"
 echo ""
 echo "Make it so. 🖖"

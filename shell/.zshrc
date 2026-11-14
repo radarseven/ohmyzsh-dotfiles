@@ -40,9 +40,9 @@ source $ZSH/oh-my-zsh.sh
 
 # --- TOOL INITIALIZATION ----------------------
 
-# Volta (Node.js version manager)
-export VOLTA_HOME="$HOME/.volta"
-export PATH="$VOLTA_HOME/bin:$PATH"
+# mise (Node.js version manager — config in ~/.config/mise/config.toml)
+# Guarded so a machine that hasn't run ./bundle.sh yet still gets a clean shell
+command -v mise > /dev/null && eval "$(mise activate zsh)"
 
 # fzf (fuzzy finder: Ctrl-R history, Ctrl-T file picker, Alt-C cd)
 source <(fzf --zsh)
