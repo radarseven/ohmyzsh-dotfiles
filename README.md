@@ -104,11 +104,15 @@ stow -R -t ~ git      # Just git config
 
 **Dealing with tools that auto-inject into `.zshrc`:**
 
-`.zshrc` is locked to read-only (chmod 444) to prevent tools from auto-injecting lines. This is managed automatically by git hooks in `.githooks/` and configured by `bootstrap.sh`.
+`~/.zshrc` is **not a symlink**. `bootstrap.sh` writes an untracked one-line stub:
 
-**If a tool install fails** complaining it can't modify `.zshrc`, that's the guard working. Check the tool's output for the lines it wanted to add and put them in `~/.mix-extra` instead.
+```zsh
+source "$HOME/.dotfiles/shell/.zshrc"
+```
 
-**If a tool somehow does write to it** (e.g., after you temporarily unlocked it), you'll see injected lines below the `END OF MANAGED CONFIG` comment. Move them to `~/.mix-extra` and restore:
+Tools that append to `~/.zshrc` on every launch (Herd re-adds its `HERD_PHP_*_INI_SCAN_DIR` exports each time it starts, and has no setting to stop) write below that line in the stub. The repo file `shell/.zshrc` is never touched, so `git status` stays clean. Stow skips `.zshrc` via `shell/.stow-local-ignore`, and re-running `bootstrap.sh` leaves an existing stub (and whatever a tool appended to it) alone.
+
+**If `shell/.zshrc` ever does show injected lines**, you will see them below the `END OF MANAGED CONFIG` comment. Move them to `~/.mix-extra` and restore:
 
 ```bash
 cd ~/.dotfiles
@@ -117,14 +121,6 @@ code ~/.mix-extra                  # Move the lines there
 git checkout -- shell/.zshrc       # Restore the clean version
 source ~/.zshrc                    # Reload
 ```
-
-**How the guard works:**
-- `shell/.zshrc` is set to `444` (read-only) after every git operation
-- Git hooks in `.githooks/` handle this automatically:
-  - `pre-commit` → unlocks to 644 (so git can write)
-  - `post-commit`, `post-merge`, `post-checkout` → locks back to 444
-- `bootstrap.sh` configures the hooks and locks the file on new machines
-- If you need to edit `.zshrc` manually: `chmod 644 ~/.zshrc`, edit, commit, and the post-commit hook locks it back
 
 ## Syncing Another Machine
 
@@ -170,6 +166,13 @@ source ~/.zshrc
 ```
 
 **Your safety net**: backups are in `~/.dotfiles-backup/`. Check with `ls ~/.dotfiles-backup/`.
+
+**Already on `enterprise`? Upgrading a machine that was set up before the `~/.zshrc` stub:**
+```bash
+cd ~/.dotfiles && git pull
+./bootstrap.sh
+```
+`bootstrap.sh` swaps the old `~/.zshrc` symlink for the untracked stub, removes the retired chmod-444 git hooks (`core.hooksPath`) and unlocks `shell/.zshrc`. Then open a new terminal, launch Herd once, and confirm `git status` stays clean. If `~/.mix-extra` on that machine still holds `HERD_PHP_*_INI_SCAN_DIR` exports, they are now harmless duplicates of what Herd writes to the stub and can be deleted.
 
 ---
 
