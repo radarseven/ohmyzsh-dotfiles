@@ -142,15 +142,37 @@ for tag in "${TAGS[@]}"; do
     fi
 done
 
-# --- GIT HOOKS ---
-echo ""
-echo "🪝 Configuring git hooks..."
-git -C "$DOTFILES_DIR" config core.hooksPath .githooks
-echo "  ✓ .zshrc will be locked (444) after git operations"
+# --- RETIRED CHMOD-444 GUARD ---
+# Older checkouts locked shell/.zshrc with git hooks (.githooks/, now gone).
+# Drop the dangling hooksPath and make the file writable again.
+if [[ "$(git -C "$DOTFILES_DIR" config --get core.hooksPath 2>/dev/null)" == ".githooks" ]]; then
+    git -C "$DOTFILES_DIR" config --unset core.hooksPath
+    echo "🪝 Removed the retired .githooks hooksPath"
+fi
+chmod 644 "$DOTFILES_DIR/shell/.zshrc" 2>/dev/null || true
 
-# Lock .zshrc to prevent tool auto-injection
-chmod 444 "$DOTFILES_DIR/shell/.zshrc" 2>/dev/null
-chmod 444 "$HOME/.zshrc" 2>/dev/null
+# --- ZSHRC STUB ---
+# ~/.zshrc is NOT stowed (see shell/.stow-local-ignore). It is an untracked
+# one-line stub that sources the repo file, so tools that append to ~/.zshrc
+# on every launch (Herd, Kiro, ...) write to the stub and never dirty the repo.
+# An existing stub is left alone so those appended lines survive re-runs.
+echo ""
+echo "🐚 Checking ~/.zshrc stub..."
+ZSHRC_TARGET="${DOTFILES_DIR/#$HOME/\$HOME}/shell/.zshrc"   # ~/.dotfiles → $HOME/.dotfiles
+ZSHRC_SOURCE_LINE="source \"$ZSHRC_TARGET\""
+if [[ -L "$HOME/.zshrc" ]]; then
+    rm "$HOME/.zshrc"
+    echo "  Replaced the old ~/.zshrc symlink with a stub"
+elif [[ -f "$HOME/.zshrc" ]] && ! grep -qF "/shell/.zshrc" "$HOME/.zshrc"; then
+    rm "$HOME/.zshrc"
+    echo "  Replaced the existing ~/.zshrc with a stub (backup in $BACKUP_DIR)"
+fi
+if [[ -f "$HOME/.zshrc" ]]; then
+    echo "  ✓ ~/.zshrc stub already in place"
+else
+    printf '%s\n\n' "$ZSHRC_SOURCE_LINE" > "$HOME/.zshrc"
+    echo "  ✓ Wrote ~/.zshrc stub → ${ZSHRC_SOURCE_LINE#source }"
+fi
 
 echo ""
 echo "✅ All dotfiles symlinked!"

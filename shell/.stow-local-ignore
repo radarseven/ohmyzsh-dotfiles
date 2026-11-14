@@ -1,0 +1,5 @@
+# .zshrc is deliberately not stowed. bootstrap.sh writes an untracked ~/.zshrc
+# stub that sources shell/.zshrc, so tools that append to ~/.zshrc (Herd, Kiro)
+# write to the stub and never dirty the repo.
+^/\.stow-local-ignore$
+^/\.zshrc$

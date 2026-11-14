@@ -42,12 +42,9 @@ The shared base reaches work-managed machines. Personal stacks, emails, hosts, a
 
 ## Handling tool auto-injection
 
-Since ~/.zshrc is a symlink, tools that auto-inject lines (Herd, Kiro, etc.) will modify the repo file. When this happens:
-1. Check what changed: `git diff shell/.zshrc`
-2. Move the injected lines to `~/.mix-extra`
-3. Restore: `git checkout -- shell/.zshrc`
+`~/.zshrc` is not stowed. It is an untracked one-line stub, written by `bootstrap.sh`, that sources `shell/.zshrc`. Tools that append to `~/.zshrc` on every launch (Herd does this with its PHP ini exports) write to the stub, so the repo file never goes dirty. Leave the stub alone; `git status` staying clean is the whole point.
 
-Always prefer `.mix-extra` for machine-specific tooling. Keep the committed files portable and clean.
+If `shell/.zshrc` ever does show injected lines (e.g. a tool followed the source line), move them to `~/.mix-extra` and `git checkout -- shell/.zshrc`. Machine-specific tooling always belongs in `~/.mix-extra`; keep the committed files portable and clean.
 
 ## Branches
 

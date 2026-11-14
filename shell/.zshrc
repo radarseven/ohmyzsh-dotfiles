@@ -62,6 +62,7 @@ fi
 eval "$(starship init zsh)"
 
 # --- END OF MANAGED CONFIG --- #
-# Anything below this line was auto-injected by a tool and should be
-# moved to ~/.mix-extra, then restore this file with:
-#   git checkout -- shell/.zshrc
+# ~/.zshrc is an untracked stub that sources this file (see bootstrap.sh).
+# Tools that auto-inject into ~/.zshrc (Herd, Kiro, ...) append to the stub,
+# so nothing should ever appear below this line. Machine-specific config
+# belongs in ~/.mix-extra.
