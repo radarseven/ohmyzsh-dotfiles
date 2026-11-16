@@ -2,10 +2,7 @@
 # Product stacks, deploy tooling, personal licenses. Never reaches a work machine.
 
 # --- PHP / Laravel stack ---
-brew "php"
-brew "composer"
-brew "mysql"
-brew "nginx"
+# PHP, Composer, nginx and MySQL all come from Herd (Pro), not Homebrew
 
 # --- Apps ---
 cask "1password-cli"
