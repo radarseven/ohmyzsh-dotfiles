@@ -40,7 +40,7 @@ brew "jq"           # JSON processor
 brew "htop"         # better top
 brew "rename"       # file renaming
 brew "pv"           # pipe viewer
-brew "tldr"         # community man pages
+brew "tlrc"         # community man pages (the `tldr` command)
 brew "trash"        # rm to the Trash instead
 brew "tmux"
 brew "moreutils"    # sponge, ts, vipe, …
