@@ -183,3 +183,9 @@ alias ccr="claude --resume"
 # --- macOS -------------------------------------
 
 alias uuid="uuidgen | pbcopy"
+
+# Stop the Touch ID button from locking the screen, for when a Magic Keyboard
+# sits on top of the MacBook's keyboard and presses it. `touchlockon` restores it.
+# https://dev.to/filipemesquita/how-use-a-magic-keyboard-on-top-of-a-macbook-5hlk
+alias touchlockoff="defaults write com.apple.loginwindow DisableScreenLockImmediate -bool yes"
+alias touchlockon="defaults delete com.apple.loginwindow DisableScreenLockImmediate"
