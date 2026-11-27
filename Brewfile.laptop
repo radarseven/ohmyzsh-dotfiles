@@ -1,2 +1,4 @@
 # Brewfile.laptop — laptops only
 # Battery, Touch ID, portable tooling. Keep it lean.
+
+cask "karabiner-elements"       # Disables the built-in keyboard under a Magic Keyboard (see README)

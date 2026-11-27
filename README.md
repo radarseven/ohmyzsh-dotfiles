@@ -314,6 +314,18 @@ figlet -f bigmoney-nw "Your Text"
 
 Used in `~/.ssh/config` for section headers. Generate new ones the same way.
 
+## Magic Keyboard on Top of the MacBook
+
+Resting a Magic Keyboard on the MacBook's own keyboard presses the keys underneath, including the Touch ID button. Three settings fix that, and they work as a set. Based on [this article](https://dev.to/filipemesquita/how-use-a-magic-keyboard-on-top-of-a-macbook-5hlk).
+
+1. **Disable the built-in keyboard** with [Karabiner-Elements](https://karabiner-elements.pqrs.org/) (installed by `bundle.sh` on `laptop` machines). In Karabiner-Elements Settings → Devices, find the Magic Keyboard and turn on "Disable the built-in keyboard while this device is connected".
+2. **Stop the Touch ID button locking the screen.** Karabiner doesn't cover that button, so run `touchlockoff`. `touchlockon` restores the default.
+3. **Turn off the triple-press shortcut.** System Settings → Accessibility → Shortcut, uncheck everything, so three presses of Touch ID don't open the Accessibility menu.
+
+The Karabiner setting only applies while the Magic Keyboard is connected. When it disconnects or runs flat, the built-in keyboard works again. If it ever sticks, the trackpad still works: quit Karabiner-Elements from its menu bar icon.
+
+Steps 1 and 3 are manual and per machine. The repo installs Karabiner but doesn't configure it.
+
 ## Shell Aliases Cheat Sheet
 
 ```bash
